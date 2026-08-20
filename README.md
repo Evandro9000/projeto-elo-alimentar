@@ -30,6 +30,6 @@ O **Elo Alimentar** resolve o déficit logístico entre o alto índice de desper
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 * **HTML5 / CSS3 / JavaScript (Vanilla)**
 * **LocalStorage** (para persistência de dados em ambiente front-end puro, sem banco de dados externo)
