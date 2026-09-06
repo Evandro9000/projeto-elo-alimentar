@@ -3,10 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elo Alimentar</title>
+    <meta name="description" content="Plataforma que conecta alimentos fora do padrão comercial a ONGs.">
+    <title>Elo Alimentar | Início</title>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/index.css">
 </head>
 <body>
-    <h1>Bem-vindo ao Elo Alimentar</h1>
-    <p>Plataforma de combate ao desperdício de alimentos.</p>
+    <header class="cabeçalho">
+        <div class="cabeçalho container">
+            <a href="logo.png" class="logo">
+                <span class="logo-icone" aria-hidden="true"></span>
+                <strong class="logo-nome">Elo Alimentar</strong>
+            </a>
+        </div>
+    </header>
+
+    <main class="principal">
+        <section class="hero">
+            <div class="container">
+                <article class="hero-conteudo">
+                    <em class="destaque">Solução Logística Social</em>
+                    <h1 class="hero-titulo">Conectando quem tem a quem precisa</h1>
+                    <p>Uma plataforma web que conecta alimentos <strong>fora do padrão comercial</strong> 
+                        de grandes empresas a ONGs que combatem a insegurança alimentar.</p>
+
+                    <menu class="acoes hero-acoes">
+                        <li><a href="#" class="btn">Quero Doar (Varejo)</a></li>
+                        <li><a href="#" class="btn secundario">Quero Receber (ONG)</a></li>
+                    </menu>
+                </article>
+
+                <figure class="hero-imagem">
+                    <img src="../images/Descarte.webp" alt="Voluntários entregando alimentos" width="600" height="400">
+                </figure>
+            </div>
+        </section>
+
+        <section aria-label="Estatísticas globais sobre o desperdício de alimentos">
+            <ul class="estatisticas-grid">
+                <li class="card texto-centro">
+                    <strong class="destaque h1">1,3 Bi</strong>
+                    <p>Toneladas de alimentos desperdiçadas por ano no mundo (ONU)</p>
+                </li>
+                <li class="card texto-centro">
+                    <strong class="destaque h1">27 Mi</strong>
+                    <p>Toneladas de comida descartadas anualmente no Brasil (FAO)</p>
+                </li>
+                <li class="card texto-centro">
+                    <strong class="destaque h1">30%</strong>
+                    <p>De toda a produção mundial de alimentos é perdida ou jogada fora</p>
+                </li>
+                <li class="card texto-centro">
+                    <strong class="destaque h1">10%</strong>
+                    <p>Das emissões globais de gases estufa vêm do desperdício alimentar</p>
+                </li>
+            </ul>
+        </section>
+
+        <section class="texto-centro espacamentoSecao">
+            <h2 id="titulo">Ganha quem doa, ganha quem recebe</h2>
+            <p class="sub">Transformando o <em>descarte</em> em solidariedade.</p>
+            
+            <div class="grid-como-funciona">
+                <article class="card texto-esquerda">
+                    <span class="icone" aria-hidden="true">🏢</span>
+                    <h3>Para Supermercados</h3>
+                    <p>Evite custos de descarte e envio para aterros. Promova impacto social e melhore a sustentabilidade (<strong>ESG</strong>) do seu negócio.</p>
+                </article>
+                
+                <article class="card texto-esquerda">
+                    <span class="icone" aria-hidden="true">🤝</span>
+                    <h3>Para ONGs Beneficiárias</h3>
+                    <p>Acesse nosso mural integrado em tempo real para visualizar lotes disponíveis e garantir alimentos para sua comunidade.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="texto-centro espacamentoSecao" id="como-funciona">
+            <h2 id="titulo">Conexão em 4 passos simples</h2>
+            <p class="sub">Um painel intuitivo e rápido.</p>
+            
+            <ol class="grid-passos">
+                <li class="texto-esquerda">
+                    <strong class="passo-lista">1</strong>
+                    <h3>Cadastro</h3>
+                    <p>Varejo e ONGs realizam cadastro para garantir a confiabilidade.</p>
+                </li>
+                <li class="texto-esquerda">
+                    <strong class="passo-lista">2</strong>
+                    <h3>Mural</h3>
+                    <p>A empresa cadastra o lote de alimentos disponíveis no painel.</p>
+                </li>
+                <li class="texto-esquerda">
+                    <strong class="passo-lista">3</strong>
+                    <h3>Reserva</h3>
+                    <p>ONGs monitoram o mural e reservam os itens necessários.</p>
+                </li>
+                <li class="texto-esquerda">
+                    <strong class="passo-lista">4</strong>
+                    <h3>Retirada</h3>
+                    <p>A ONG retira os insumos no ponto indicado para distribuição.</p>
+                </li>
+            </ol>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <div class="container grid-footer">
+            <section class="texto-esquerda">
+                <strong>Elo Alimentar</strong>
+                <p class="sub">Mitigando a insegurança alimentar através da tecnologia.</p>
+            </section>
+        </div>
+    </footer>
 </body>
 </html>

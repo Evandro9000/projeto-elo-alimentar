@@ -1,0 +1,130 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-primaria: #115D33; 
+    --cor-fundo-destaque: #E6F0EA; 
+    --cor-escuro: #1E293B;
+    --cor-texto: #64748B;
+    --cor-fundo: #FFFFFF;
+    --cor-borda: #e3e6ee;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--cor-escuro);
+    background: var(--cor-fundo);
+    line-height: 1.6;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: filter 0.3s ease;
+}
+
+ul, ol, menu {
+    list-style: none;
+}
+
+
+.container {
+    width: min(100% - 32px, 1200px);
+    margin: 0 auto;
+}
+
+.texto-centro { text-align: center; }
+.texto-esquerda { text-align: left; }
+.espacamentoSecao { margin: 80px 0; }
+
+#titulo {
+    font-size: 2.2rem;
+    color: var(--cor-escuro);
+    margin-bottom: 8px;
+}
+
+.sub {
+    color: var(--cor-texto);
+    margin-bottom: 32px;
+}
+
+.destaque {
+    color: var(--cor-primaria);
+    font-weight: 700;
+    font-style: normal;
+}
+
+.h1 { font-size: 2.5rem; }
+
+/* COMPONENTES: CABEÇALHO */
+.cabeçalho {
+    padding: 16px 0;
+    background: #fff;
+    border-bottom: 1px solid var(--cor-borda);
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.4rem;
+    color: var(--cor-primaria);
+}
+
+.logo-icone {
+    width: 28px;
+    height: 28px;
+    background: var(--cor-primaria);
+    border-radius: 6px;
+}
+
+.acoes {
+    display: flex;
+    gap: 16px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    background: var(--cor-primaria);
+    color: #fff;
+    text-align: center;
+    border: 2px solid var(--cor-primaria);
+}
+
+.btn:hover { filter: brightness(0.9); }
+
+.btn.secundario {
+    background: var(--cor-fundo-destaque);
+    color: var(--cor-primaria);
+    border-color: transparent;
+}
+
+/* COMPONENTES: CARD */
+.card {
+    background: #fff;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+/* COMPONENTES: RODAPÉ */
+.rodape {
+    background: var(--cor-fundo-destaque);
+    padding: 60px 0;
+    margin-top: 80px;
+}
+
+.grid-footer {
+    display: grid;
+    grid-template-columns: 1fr;
+}

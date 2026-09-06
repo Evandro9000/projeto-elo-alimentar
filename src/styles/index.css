@@ -1,0 +1,107 @@
+.hero {
+    padding: 60px 0;
+}
+
+.hero .container {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-conteudo {
+    flex: 1;
+}
+
+.hero-titulo {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin: 16px 0 24px;
+    color: var(--cor-escuro);
+}
+
+.hero-conteudo p {
+    font-size: 1.1rem;
+    color: var(--cor-texto);
+    margin-bottom: 40px;
+}
+
+.hero-imagem {
+    flex: 1;
+}
+
+.hero-imagem img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* GRIDS ESPECÍFICOS */
+.estatisticas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 80px;
+}
+
+.grid-como-funciona {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.grid-passos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+/* ÍCONES E MARCADORES */
+.icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px; 
+    height: 56px;
+    background: var(--cor-fundo-destaque);
+    border-radius: 12px;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.passo-lista {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px;
+    background: var(--cor-primaria);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+.grid-passos h3 {
+    margin-bottom: 8px;
+    color: var(--cor-escuro);
+}
+
+.grid-passos p {
+    color: var(--cor-texto);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 992px) {
+    .hero .container { flex-direction: column; text-align: center; }
+    .hero-acoes { justify-content: center; }
+    .estatisticas-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-passos { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .hero-titulo { font-size: 2.5rem; }
+    .hero-acoes { flex-direction: column; width: 100%; }
+    .hero-acoes li, .hero-acoes .btn { width: 100%; }
+    .estatisticas-grid, .grid-como-funciona, .grid-passos { grid-template-columns: 1fr; }
+}
