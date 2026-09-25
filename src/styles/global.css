@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gradiente-inicio: #D9E9E4;
+    --gradiente-fim: #10B981;
+    --cor-verde-destaque: #58B428;
+    --cor-texto-escuro: #1E293B;
+    --cor-texto-corpo: #334155;
+    --cor-card-fundo: rgba(255, 255, 255, 0.4);
+    --cor-hero-box: #D1DDD8;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--cor-texto-escuro);
+    /* Gradiente linear do protótipo */
+    background: linear-gradient(180deg, var(--gradiente-inicio) 0%, var(--gradiente-fim) 100%);
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.container {
+    width: min(100% - 32px, 1100px);
+    margin: 0 auto;
+}
+
+.destaque-verde {
+    color: var(--cor-verde-destaque);
+    font-weight: 700;
+}
+
+.cabecalho {
+    padding: 16px 0;
+}
+
+.cabecalho .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.logo-icone {
+    width: 24px;
+    height: 24px;
+    background: var(--cor-verde-destaque);
+    border-radius: 6px;
+}
+
+.btn-entrar {
+    background-color: var(--cor-verde-destaque);
+    color: #ffffff;
+    padding: 8px 22px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: opacity 0.2s;
+}
+
+.btn-entrar:hover {
+    opacity: 0.9;
+}
+
+
+.rodape {
+    background-color: #064E3B; 
+    color: #FFFFFF;
+    padding: 36px 0;
+    margin-top: 60px;
+    border-top: 4px solid var(--cor-verde-destaque); 
+}
+
+.rodape .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.rodape-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rodape-logo-icone {
+    width: 24px;
+    height: 24px;
+    background: var(--cor-verde-destaque);
+    border-radius: 6px;
+}
+
+.rodape-titulo {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.rodape-sub {
+    font-size: 0.875rem;
+    color: #A7F3D0; 
+    max-width: 360px;
+    line-height: 1.5;
+}

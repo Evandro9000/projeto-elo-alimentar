@@ -3,10 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elo Alimentar</title>
+    <meta name="description" content="Plataforma que conecta alimentos fora do padrão comercial a ONGs.">
+    <title>Elo Alimentar | Início</title>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/index.css">
 </head>
 <body>
-    <h1>Bem-vindo ao Elo Alimentar</h1>
-    <p>Plataforma de combate ao desperdício de alimentos.</p>
+
+    <!-- CABEÇALHO -->
+    <header class="cabecalho">
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-icone" aria-hidden="true"></span>
+                <span class="logo-nome">Elo Alimentar</span>
+            </a>
+            <a href="#" class="btn-entrar">Entrar</a>
+        </div>
+    </header>
+
+    <main class="principal">
+        
+        <!-- SEÇÃO HERO -->
+        <section class="hero secao">
+            <div class="container hero-grid">
+                <article class="hero-card">
+                    <h1 class="hero-titulo">Conectando quem tem a quem precisa</h1>
+                    <p>
+                        Segundo estudo da ONU, o Brasil é o <strong class="destaque-verde">10º país</strong> que mais desperdiça alimento no mundo. Dessa forma, resolvemos ajudar a resolver esse problema, criando uma plataforma que conecta os comércios, que muitas vezes precisam jogar alimento fora e as ONGs, que podem usar esses alimentos para ajudar as pessoas.
+                    </p>
+                </article>
+
+                <div class="hero-imagem">
+                    <img src="../images/Descarte.webp" alt="Frutas e vegetais descartados no chão">
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO ESTATÍSTICAS -->
+        <section class="secao">
+            <div class="container">
+                <ul class="estatisticas-grid">
+                    <li class="card-estatistica">
+                        <strong class="destaque-verde">17%</strong> Do que é produzido se perde entre a colheita e as prateleiras dos supermercados.
+                    </li>
+                    <li class="card-estatistica">
+                        O desperdício gera um descarte de mais de <strong class="destaque-verde">U$ 1 trilhão</strong> em alimentos todos os anos
+                    </li>
+                    <li class="card-estatistica">
+                        Todos os anos <strong class="destaque-verde">783 milhões</strong> de pessoas são afetadas pela fome
+                    </li>
+                    <li class="card-estatistica">
+                        O IBGE mostra que <strong class="destaque-verde">30%</strong> produzido no país acaba indo para o lixo.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SEÇÃO SOLUÇÃO -->
+        <section class="secao">
+            <div class="container">
+                <h2 class="titulo-secao-verde">Ajudando a todos evitar o desperdício</h2>
+                
+                <div class="grid-solucao">
+                    <article class="coluna-solucao">
+                        <h3>Para Empresas</h3>
+                        <p>Evite custos com descarte e envio para aterros. Além de promover um impacto social positivo e melhorar a sustentabilidade (ESG) da sua empresa.</p>
+                    </article>
+                    
+                    <article class="coluna-solucao">
+                        <h3>Para ONGs</h3>
+                        <p>Acesse o nosso mural em tempo real e encontre os alimentos necessários para ajudar a sua comunidade.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO PASSO A PASSO -->
+        <section class="secao">
+            <div class="container">
+                <h2 class="titulo-secao">Como começar, passo a passo:</h2>
+                
+                <ol class="grid-passos">
+                    <li class="passo-item">
+                        <strong>1.</strong> Clique no botão entrar para fazer login ou criar uma conta
+                    </li>
+                    <li class="passo-item">
+                        <strong>2.</strong> Escolha os lotes de preferência e aperte em "Adicionar Lotes"
+                    </li>
+                    <li class="passo-item">
+                        <strong>3.</strong> Caso precise de mais informações, clique em "Detalhes". (<span class="destaque-verde">Dica:</span> Dê preferência para os pertos de você)
+                    </li>
+                    <li class="passo-item">
+                        <strong>4.</strong> Pronto, agora é só ir no ícone de cestinha e confirmar o pedido. O outro lado fará o mesmo
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="rodape">
+        <div class="container">
+            <div class="rodape-brand">
+                <span class="rodape-logo-icone" aria-hidden="true"></span>
+                <span class="rodape-titulo">Elo Alimentar</span>
+            </div>
+            <p class="rodape-sub">Combatendo a insegurança alimentar através da tecnologia.</p>
+        </div>
+    </footer>
 </body>
 </html>
