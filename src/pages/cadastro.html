@@ -6,37 +6,79 @@
     <title>Elo Alimentar | Criar Conta</title>
   
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <linkb rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/autenticacao.css">
 </head>
-<ody>
+<body>
 
     <main class="area-login">
         <div class="card-login">
             <h1 class="titulo-login">Criar Conta</h1>
             
-            <form action="#" class="formulario-login">
-                <input type="text" class="campo-texto" placeholder="CNPJ:" required>
-                <input type="text" class="campo-texto" placeholder="Nome da Empresa/ONG" required>
-                
-                <select class="campo-texto campo-select" required>
-                    <option value="" disabled selected>Escolha uma opção</option>
-                    <option value="empresa">Empresa (Doador)</option>
-                    <option value="ong">ONG (Receptor)</option>
-                </select>
+            <!-- Alerta de Sucesso (Oculto)-->
+            <div id="mensagem-sucesso" class="alerta alerta-sucesso oculto" aria-live="polite">
+                Cadastro realizado com sucesso!
+            </div>
 
-                <input type="email" class="campo-texto" placeholder="E-mail: exemplo@gmail.com" required>
-                <input type="password" class="campo-texto" placeholder="Senha:" required>
+            <!-- Resumo de Erros -->
+            <div id="resumo-erros" class="alerta alerta-erro oculto" aria-live="assertive">
+                <strong>Atenção:</strong> Por favor, corrija os erros destacados.
+            </div>
+            
+            <form id="form-cadastro" class="formulario-login" novalidate>
                 
-                <button type="submit" class="btn-enviar">Criar</button>
+                <!-- Campo CNPJ -->
+                <div class="form-group" style="text-align: left;">
+                    <input type="text" id="cnpj" class="campo-texto" placeholder="CNPJ:" required>
+                    <span id="erro-cnpj" class="erro-msg"></span>
+                </div>
+
+                <!-- Campo Nome da Empresa/ONG -->
+                <div class="form-group" style="text-align: left;">
+                    <input type="text" id="nome" class="campo-texto" placeholder="Nome da Empresa/ONG" required>
+                    <span id="erro-nome" class="erro-msg"></span>
+                </div>
+                
+                <!-- Select de Tipo -->
+                <div class="form-group" style="text-align: left;">
+                    <select id="tipo" class="campo-texto campo-select" required>
+                        <option value="" disabled selected>Escolha uma opção</option>
+                        <option value="empresa">Empresa (Doador)</option>
+                        <option value="ong">ONG (Receptor)</option>
+                    </select>
+                    <span id="erro-tipo" class="erro-msg"></span>
+                </div>
+
+                <!-- Campo E-mail -->
+                <div class="form-group" style="text-align: left;">
+                    <input type="email" id="email" class="campo-texto" placeholder="E-mail: exemplo@gmail.com" required>
+                    <span id="erro-email" class="erro-msg"></span>
+                </div>
+
+                <!-- Campo Senha com Medidor de Força -->
+                <div class="form-group" style="text-align: left;">
+                    <input type="password" id="senha" class="campo-texto" placeholder="Senha:" required>
+                    
+                    <div class="forca-senha-container">
+                        <div class="forca-barra-fundo">
+                            <div id="forca-barra" class="forca-barra-preenchimento"></div>
+                        </div>
+                        <span id="forca-texto" class="forca-texto">Aguardando senha...</span>
+                    </div>
+                    
+                    <span id="erro-senha" class="erro-msg"></span>
+                </div>
+                
+                <button type="submit" id="btn-enviar" class="btn-enviar" disabled>Criar</button>
             </form>
 
             <a href="login.html" class="link-mudar-pagina">Já tem cadastro? Clique aqui</a>
         </div>
     </main>
 
+    <script src="../utils/scriptCadastro.js"></script>
 </body>
 </html>
