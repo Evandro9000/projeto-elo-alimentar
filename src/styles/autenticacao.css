@@ -138,3 +138,64 @@
         font-size: 1rem;
     }
 }
+
+/* --- Estados de Validação e Feedback Dinâmico --- */
+.input-invalido {
+    border: 2px solid #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.input-valido {
+    border: 2px solid #10b981;
+}
+
+.erro-msg {
+    display: none;
+    color: #ffd8d8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 4px;
+    text-align: left;
+}
+
+/* Alertas de Sucesso e Erro Geral */
+.alerta {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.alerta-sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alerta-erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.oculto {
+    display: none;
+}
+
+/* Botão desativado */
+.btn-enviar:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Cores da Barra de Força da Senha */
+.forca-fraca { background-color: #ef4444; width: 33.33%; }
+.texto-fraco { color: #fca5a5 !important; }
+
+.forca-media { background-color: #f59e0b; width: 66.66%; }
+.texto-medio { color: #fcd34d; }
+
+.forca-forte { background-color: #10b981; width: 100%; }
+.texto-forte { color: #6ee7b7; }
