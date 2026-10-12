@@ -1,0 +1,234 @@
+/* ==========================================================================
+   ESTILOS DE AUTENTICAÇÃO (PADRÃO - MOBILE FIRST)
+   ========================================================================== */
+
+/* Centraliza o card na tela */
+.area-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 16px;
+}
+
+/* O bloco branco no Mobile */
+.card-login {
+    background-color: #FFFFFF;
+    width: 100%;
+    padding: 28px 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.titulo-login {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--cor-texto-escuro, #1E293B);
+    margin-bottom: 24px;
+}
+
+/* Formulário e estrutura de inputs */
+.formulario-login {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Campos verdes de digitação */
+.campo-texto {
+    width: 100%;
+    background-color: var(--cor-verde-destaque, #58B428);
+    color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 600;
+    outline: none;
+    transition: filter 0.2s ease, border-color 0.2s ease;
+}
+
+.campo-texto::placeholder {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+}
+
+.campo-texto:focus {
+    filter: brightness(0.9);
+}
+
+/* Ajuste da setinha do Select para cor branca */
+.campo-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px top 50%;
+    background-size: 12px auto;
+    cursor: pointer;
+}
+
+.campo-select option {
+    background-color: #FFFFFF;
+    color: #334155;
+}
+
+/* Botão de Entrar / Criar */
+.btn-enviar {
+    width: 100%;
+    background-color: var(--cor-verde-destaque, #58B428);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-enviar:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.btn-enviar:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.btn-enviar:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Link de troca de página */
+.link-mudar-pagina {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--cor-texto-escuro, #1E293B);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.link-mudar-pagina:hover {
+    color: var(--cor-verde-destaque, #58B428);
+}
+
+@media (min-width: 860px) {
+    .card-login {
+        max-width: 420px;
+        padding: 40px 32px;
+    }
+
+    .titulo-login {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .formulario-login {
+        gap: 16px;
+    }
+
+    .campo-texto {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+    }
+
+    .btn-enviar {
+        padding: 14px;
+        font-size: 1rem;
+    }
+}
+
+/* ==========================================================================
+   ESTADOS DE VALIDAÇÃO E FEEDBACK VISUAL MELHORADOS
+   ========================================================================== */
+
+/* Mantém o fundo verde original e legível, aplicando uma borda vermelha nítida no erro */
+.input-invalido {
+    border: 2px solid #ef4444;
+    background-color: var(--cor-verde-destaque, #58B428);
+    color: #FFFFFF;
+}
+
+.input-valido {
+    border: 2px solid #10b981;
+    background-color: var(--cor-verde-destaque, #58B428);
+    color: #FFFFFF;
+}
+
+/* Mensagem de erro em vermelho escuro destacada sobre o fundo branco do card */
+.erro-msg {
+    display: none;
+    color: #dc2626;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 4px;
+    text-align: left;
+}
+
+/* Alertas globais */
+.alerta {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.alerta-sucesso {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.alerta-erro {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.oculto {
+    display: none;
+}
+
+/* Indicador de Força da Senha */
+.forca-senha-container {
+    margin-top: 6px;
+    text-align: left;
+}
+
+.forca-barra-fundo {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.forca-barra-preenchimento {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.forca-texto {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+    color: #475569;
+}
+
+/* Cores das barras de força e textos correspondentes */
+.forca-fraca { background-color: #dc3545; width: 33.33%; }
+.texto-fraco { color: #dc2626; }
+
+.forca-media { background-color: #d97706; width: 66.66%; }
+.texto-medio { color: #d97706; }
+
+.forca-forte { background-color: #28a745; width: 100%; }
+.texto-forte { color: #16a34a; }
