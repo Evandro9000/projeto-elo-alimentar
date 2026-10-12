@@ -139,26 +139,27 @@
     }
 }
 
-/* --- Estados de Validação e Feedback Dinâmico --- */
+/* --- ESTADOS DE VALIDAÇÃO E FEEDBACK--- */
+
 .input-invalido {
     border: 2px solid #ef4444;
-    background-color: rgba(239, 68, 68, 0.1);
+    background-color: rgba(239, 68, 68, 0.2);
 }
 
 .input-valido {
-    border: 2px solid #10b981;
+    border: 2px solid #ffffff;
 }
 
 .erro-msg {
     display: none;
-    color: #ffd8d8;
+    color: #ffdada;
     font-size: 0.75rem;
     font-weight: 700;
     margin-top: 4px;
     text-align: left;
 }
 
-/* Alertas de Sucesso e Erro Geral */
+/* Alertas globais */
 .alerta {
     padding: 12px;
     border-radius: 8px;
@@ -180,7 +181,7 @@
 }
 
 .oculto {
-    display: none;
+    display: none !important;
 }
 
 /* Botão desativado */
@@ -188,11 +189,39 @@
     background-color: #94a3b8;
     cursor: not-allowed;
     opacity: 0.6;
+    transform: none;
 }
 
-/* Cores da Barra de Força da Senha */
+/* Indicador de Força da Senha alinhado ao layout */
+.forca-senha-container {
+    margin-top: 6px;
+    text-align: left;
+}
+
+.forca-barra-fundo {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.forca-barra-preenchimento {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.forca-texto {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+    color: #ffffff;
+}
+
+/* Cores das barras de força */
 .forca-fraca { background-color: #ef4444; width: 33.33%; }
-.texto-fraco { color: #fca5a5 !important; }
+.texto-fraco { color: #fca5a5; }
 
 .forca-media { background-color: #f59e0b; width: 66.66%; }
 .texto-medio { color: #fcd34d; }
