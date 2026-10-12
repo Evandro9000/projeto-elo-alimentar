@@ -18,16 +18,36 @@
         <div class="card-login">
             <h1 class="titulo-login">Login</h1>
             
-            <form action="#" class="formulario-login">
-                <input type="text" class="campo-texto" placeholder="CNPJ:" required>
-                <input type="password" class="campo-texto" placeholder="Senha:" required>
+            <!-- Mensagens de Feedback -->
+            <div id="mensagem-sucesso" class="alerta alerta-sucesso oculto" aria-live="polite">
+                Login realizado com sucesso! Redirecionando...
+            </div>
+
+            <div id="resumo-erros" class="alerta alerta-erro oculto" aria-live="assertive">
+                <strong>Atenção:</strong> Preencha os campos corretamente.
+            </div>
+
+            <form id="form-login" class="formulario-login" novalidate>
                 
-                <button type="submit" class="btn-enviar">Entrar</button>
+                <!-- CNPJ -->
+                <div class="form-group" style="text-align: left;">
+                    <input type="text" id="cnpj-login" class="campo-texto" placeholder="CNPJ:" required>
+                    <span id="erro-cnpj-login" class="erro-msg"></span>
+                </div>
+
+                <!-- Senha -->
+                <div class="form-group" style="text-align: left;">
+                    <input type="password" id="senha-login" class="campo-texto" placeholder="Senha:" required>
+                    <span id="erro-senha-login" class="erro-msg"></span>
+                </div>
+                
+                <button type="submit" id="btn-entrar" class="btn-enviar" disabled>Entrar</button>
             </form>
 
             <a href="cadastro.html" class="link-mudar-pagina">Criar uma conta</a>
         </div>
     </main>
 
+    <script src="../utils/scriptLogin.js"></script>
 </body>
 </html>
