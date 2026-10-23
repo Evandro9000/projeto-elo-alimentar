@@ -38,16 +38,16 @@
 /* Campos verdes de digitação */
 .campo-texto {
     width: 100%;
-    background-color: var(--cor-verde-destaque);
+    background-color: var(--cor-verde-destaque, #58B428);
     color: #FFFFFF;
-    border: none;
+    border: 2px solid transparent;
     border-radius: 8px;
     padding: 12px 14px;
     font-size: 0.9rem;
     font-family: inherit;
     font-weight: 600;
     outline: none;
-    transition: filter 0.2s ease;
+    transition: filter 0.2s ease, border-color 0.2s ease;
 }
 
 .campo-texto::placeholder {
@@ -77,7 +77,7 @@
 /* Botão de Entrar / Criar */
 .btn-enviar {
     width: 100%;
-    background-color: var(--cor-verde-destaque);
+    background-color: var(--cor-verde-destaque, #58B428);
     color: #FFFFFF;
     border: none;
     border-radius: 8px;
@@ -90,12 +90,18 @@
     transition: opacity 0.2s ease, transform 0.1s ease;
 }
 
-.btn-enviar:hover {
+.btn-enviar:hover:not(:disabled) {
     opacity: 0.9;
 }
 
-.btn-enviar:active {
+.btn-enviar:active:not(:disabled) {
     transform: scale(0.98);
+}
+
+.btn-enviar:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 /* Link de troca de página */
@@ -103,17 +109,16 @@
     display: inline-block;
     margin-top: 20px;
     font-size: 0.85rem;
-    color: var(--cor-texto-escuro);
+    color: var(--cor-texto-escuro, #1E293B);
     text-decoration: underline;
     font-weight: 600;
 }
 
 .link-mudar-pagina:hover {
-    color: var(--cor-verde-destaque);
+    color: var(--cor-verde-destaque, #58B428);
 }
 
 @media (min-width: 860px) {
-
     .card-login {
         max-width: 420px;
         padding: 40px 32px;
@@ -138,3 +143,92 @@
         font-size: 1rem;
     }
 }
+
+/* ==========================================================================
+   ESTADOS DE VALIDAÇÃO E FEEDBACK VISUAL MELHORADOS
+   ========================================================================== */
+
+/* Mantém o fundo verde original e legível, aplicando uma borda vermelha nítida no erro */
+.input-invalido {
+    border: 2px solid #ef4444;
+    background-color: var(--cor-verde-destaque, #58B428);
+    color: #FFFFFF;
+}
+
+.input-valido {
+    border: 2px solid #10b981;
+    background-color: var(--cor-verde-destaque, #58B428);
+    color: #FFFFFF;
+}
+
+/* Mensagem de erro em vermelho escuro destacada sobre o fundo branco do card */
+.erro-msg {
+    display: none;
+    color: #dc2626;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 4px;
+    text-align: left;
+}
+
+/* Alertas globais */
+.alerta {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.alerta-sucesso {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.alerta-erro {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.oculto {
+    display: none;
+}
+
+/* Indicador de Força da Senha */
+.forca-senha-container {
+    margin-top: 6px;
+    text-align: left;
+}
+
+.forca-barra-fundo {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.forca-barra-preenchimento {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.forca-texto {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 4px;
+    color: #475569;
+}
+
+/* Cores das barras de força e textos correspondentes */
+.forca-fraca { background-color: #dc3545; width: 33.33%; }
+.texto-fraco { color: #dc2626; }
+
+.forca-media { background-color: #d97706; width: 66.66%; }
+.texto-medio { color: #d97706; }
+
+.forca-forte { background-color: #28a745; width: 100%; }
+.texto-forte { color: #16a34a; }
