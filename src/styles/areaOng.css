@@ -1,0 +1,20 @@
+.sidebar{
+    grid-area: sidebar;
+    background-color: var(--gradiente-inicio);
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.icones-esquerda{
+    margin: 0.5rem 0.5rem 0.5rem;
+}
+
+.icones-direita{
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem 0.5rem 0;
+    gap: 1.688rem;
+}
+
