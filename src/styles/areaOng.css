@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: row;
     justify-content:space-between;
+    align-items: center;
 }
 
 .icones-esquerda{
@@ -18,3 +19,194 @@
     gap: 1.688rem;
 }
 
+.profile img {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.logout img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.basket img {
+    width: 2.188rem;
+    height: 2.188rem;
+}
+
+.rotulos{
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.conteiner-categorias {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 0.5rem;
+}
+
+.categorias {
+    display: flex;
+    flex-direction: column;
+}
+
+.rotulos h1 {
+    padding-left: 2.25rem;
+    font-size: 0.938rem;
+}
+
+.rotulos h2 {
+    padding-left: 2.25rem;
+    font-size: 0.938rem;
+}
+
+.rotulos p {
+    padding-left: 2.25rem;
+    font-size: 0.75rem;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.063rem;
+    margin: 2rem;
+    padding: 0;
+
+}
+
+.card {
+    background: var(--gradiente-inicio);
+    padding: 2rem;
+    min-height: 28rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:empty{
+    background: var(--gradiente-inicio);
+
+}
+
+.cabecalho{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cabecalho p {
+    font-size: 0.5rem;
+}
+
+
+.card-content {
+    font-size: 0.75rem;
+}
+
+.card-content p {
+    padding-bottom: 0.5rem;
+
+}
+
+.info {
+    font-weight: 800;
+}
+.card-botao {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+    gap: 0.5rem;
+}
+.card-botao button{
+    background-color: var(--cor-texto-escuro);
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.card-botao button:hover {
+    background-color: var(--cor-texto-corpo);
+    opacity: 0.9;
+}
+
+@media (min-width: 960px) {
+    body {
+        display: grid;
+        grid-template-columns: 100px 100px 1fr;
+        grid-template-areas: 
+        "sidebar rotulos itens";
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .sidebar {
+        grid-area: sidebar;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        padding: 1.5rem;
+        align-items: center;
+    }
+
+    .icones-direita{
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin: 0;
+    }
+
+    .profile img {
+    width: 3.5rem;
+    height: auto;
+    }
+
+    .logout img {
+        width: 2.875rem;
+        height: auto;
+    }
+
+    .basket img {
+        width: 5rem;
+        height: auto;
+    }
+
+    .rotulos {
+        grid-area: rotulos;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rotulos h1, 
+    .rotulos h2, 
+    .rotulos p {
+        padding-left: 0; 
+    }
+
+    .conteiner-categorias {
+    flex-direction: column;
+    gap: 1rem;
+    }
+
+    .categorias {
+        flex-direction: column;
+
+    }
+
+    .itens {
+        grid-area: itens;
+        overflow-y: auto;
+    }
+
+    .cards {
+        grid-template-columns: repeat(3, minmax(260px, 1fr));
+    }
+
+}
