@@ -4,20 +4,19 @@
     padding: 0;
 }
 
-body.dashboard-body {
+body {
+    margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: #10B981;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    background-color: var(--gradiente-inicio, #10B981);
 }
 
 /* ==========================================
-   SIDEBAR (MOBILE FIRST)
+   SIDEBAR 
    ========================================== */
 .sidebar {
-    background-color: #E5E7EB;
-    padding: 0.8rem 1rem;
+    grid-area: sidebar;
+    background-color: var(--gradiente-inicio, #10B981);
+    padding: 0 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -25,71 +24,66 @@ body.dashboard-body {
     border-bottom: 1px solid #D1D5DB;
 }
 
-.basket img {
-    width: 2.2rem;
-    height: 2.2rem;
-    display: block;
+.icones-esquerda {
+    margin: 0.5rem;
 }
 
-.icones-inferiores {
+.icones-direita {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #374151;
-    font-size: 0.65rem;
-    font-weight: 600;
+    margin: 0.5rem;
+    gap: 1.688rem;
 }
 
 .profile img {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     object-fit: contain;
 }
 
 .logout img {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem;
+    height: 2rem;
     object-fit: contain;
-    display: block;
+}
+
+.basket img {
+    width: 2.188rem;
+    height: 2.188rem;
+    object-fit: contain;
 }
 
 /* ==========================================
-   CONTEÚDO PRINCIPAL (VERDE)
+   CONTEÚDO PRINCIPAL
    ========================================== */
 .itens {
-    flex: 1;
+    grid-area: itens;
     padding: 1rem;
     display: flex;
     flex-direction: column;
 }
 
-/* Quadro preto envolvente no estilo Figma */
+/* Caixa com a borda preta */
 .painel-caixa {
-    border: 2.5px solid #000000;
+    background-color: var(--gradiente-inicio, #10B981);
+    border: 2px solid #000000;
     border-radius: 12px;
-    padding: 1.25rem;
-    flex: 1;
+    padding: 20px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
 .btn-voltar {
     display: inline-block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 12px;
     width: fit-content;
+    text-decoration: none;
 }
 
 .btn-voltar img {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 24px;
+    height: 24px;
     display: block;
 }
 
@@ -97,27 +91,30 @@ body.dashboard-body {
     font-size: 1.5rem;
     font-weight: 800;
     color: #000000;
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
-/* CARDS DOS LOTES */
 .cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 16px;
+    padding: 0;
+    margin: 0;
 }
 
 .card {
     background-color: #E5E7EB;
     border-radius: 8px;
-    padding: 1rem 0.8rem;
+    padding: 12px;
     width: 130px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .foto {
-    margin: 0 0 0.6rem 0;
+    margin: 0;
 }
 
 .foto img {
@@ -125,83 +122,90 @@ body.dashboard-body {
     height: 60px;
     object-fit: cover;
     border-radius: 50%;
-    margin: 0 auto;
+    margin: 0 auto 8px auto;
     display: block;
 }
 
 .info {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #111827;
+    color: #1F2937;
     line-height: 1.2;
 }
 
 /* ==========================================
-   RESPONSIVIDADE (DESKTOP)
+   RESPONSIVIDADE (DESKTOP) 
    ========================================== */
-@media (min-width: 860px) {
-    body.dashboard-body {
+@media (min-width: 960px) {
+    body {
         display: grid;
-        grid-template-columns: 80px 1fr;
+        grid-template-columns: 100px 1fr;
+        grid-template-areas: 
+        "sidebar itens";
         height: 100vh;
         overflow: hidden;
     }
 
     .sidebar {
+        grid-area: sidebar;
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-        padding: 1.5rem 0.5rem;
+        padding: 1.5rem;
+        align-items: center;
         border-bottom: none;
         border-right: 1px solid #D1D5DB;
+        background-color: #E5E7EB; 
     }
 
-    .icones-inferiores {
+    .icones-direita {
         flex-direction: column;
+        align-items: center;
         gap: 1.5rem;
+        margin: 0;
     }
 
     .profile img {
-        width: 2.8rem;
-        height: 2.8rem;
+        width: 3.5rem;
+        height: auto;
     }
 
     .logout img {
-        width: 2.2rem;
-        height: 2.2rem;
+        width: 2.875rem;
+        height: auto;
+    }
+
+    .basket img {
+        width: 3.5rem;
+        height: auto;
     }
 
     .itens {
-        padding: 2rem;
+        grid-area: itens;
         overflow-y: auto;
+        padding: 2rem;
     }
 
     .painel-caixa {
-        padding: 2.5rem;
-        border-width: 3px;
-    }
-
-    .btn-voltar img {
-        width: 2rem;
-        height: 2rem;
+        height: 100%;
+        padding: 32px;
     }
 
     .titulo-painel {
-        font-size: 2rem;
-        margin-bottom: 2rem;
+        font-size: 1.8rem;
     }
 
     .card {
-        width: 150px;
-        padding: 1.2rem 1rem;
+        width: 160px;
+        padding: 16px;
     }
 
     .foto img {
-        width: 75px;
-        height: 75px;
+        width: 80px;
+        height: 80px;
     }
 
     .info {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
 }
