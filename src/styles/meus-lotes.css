@@ -1,0 +1,207 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.dashboard-body {
+    font-family: 'Inter', sans-serif;
+    background-color: #10B981;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   SIDEBAR (MOBILE FIRST)
+   ========================================== */
+.sidebar {
+    background-color: #E5E7EB;
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D1D5DB;
+}
+
+.basket img {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: block;
+}
+
+.icones-inferiores {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #374151;
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+.profile img {
+    width: 2.2rem;
+    height: 2.2rem;
+    object-fit: contain;
+}
+
+.logout img {
+    width: 1.8rem;
+    height: 1.8rem;
+    object-fit: contain;
+    display: block;
+}
+
+/* ==========================================
+   CONTEÚDO PRINCIPAL (VERDE)
+   ========================================== */
+.itens {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Quadro preto envolvente no estilo Figma */
+.painel-caixa {
+    border: 2.5px solid #000000;
+    border-radius: 12px;
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-voltar {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    width: fit-content;
+}
+
+.btn-voltar img {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+}
+
+.titulo-painel {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 1.5rem;
+}
+
+/* CARDS DOS LOTES */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.card {
+    background-color: #E5E7EB;
+    border-radius: 8px;
+    padding: 1rem 0.8rem;
+    width: 130px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.foto {
+    margin: 0 0 0.6rem 0;
+}
+
+.foto img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: block;
+}
+
+.info {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+}
+
+/* ==========================================
+   RESPONSIVIDADE (DESKTOP)
+   ========================================== */
+@media (min-width: 860px) {
+    body.dashboard-body {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .sidebar {
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        padding: 1.5rem 0.5rem;
+        border-bottom: none;
+        border-right: 1px solid #D1D5DB;
+    }
+
+    .icones-inferiores {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .profile img {
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .logout img {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .itens {
+        padding: 2rem;
+        overflow-y: auto;
+    }
+
+    .painel-caixa {
+        padding: 2.5rem;
+        border-width: 3px;
+    }
+
+    .btn-voltar img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .titulo-painel {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .card {
+        width: 150px;
+        padding: 1.2rem 1rem;
+    }
+
+    .foto img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .info {
+        font-size: 0.85rem;
+    }
+}
