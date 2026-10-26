@@ -4,10 +4,17 @@
     padding: 0;
 }
 
+html, body {
+    height: 100hv;
+    overflow: hidden;
+}
+
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     background-color: var(--gradiente-inicio, #10B981);
+    display: flex;
+    flex-direction: column;
 }
 
 /* ==========================================
@@ -61,11 +68,11 @@ body {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 /* Caixa com a borda preta */
 .painel-caixa {
-    background-color: var(--gradiente-inicio, #10B981);
     border: 2px solid #000000;
     border-radius: 12px;
     padding: 20px;
