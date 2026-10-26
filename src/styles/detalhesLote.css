@@ -1,0 +1,201 @@
+.sidebar {
+    grid-area: sidebar;
+    background-color: var(--gradiente-inicio, #10B981);
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #D1D5DB;
+}
+
+.icones-esquerda {
+    margin: 0.5rem;
+}
+
+.icones-direita {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem;
+    gap: 1.688rem;
+}
+
+.profile img {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: contain;
+}
+
+.logout img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+
+.basket img {
+    width: 2.188rem;
+    height: 2.188rem;
+    object-fit: contain;
+}
+
+.area {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card-lote {
+    grid-area: area;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--gradiente-inicio);
+    width: 20.375rem;
+    height: 37.063rem;
+    margin: 2.375rem;
+    padding: 20px;
+}
+
+.foto img {
+    width: 8.125rem;
+    height: 8.125rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+p {
+    padding: 20px;
+    line-height: 30px;
+}
+
+/* Informações do lote */
+.informacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.informacoes p {
+    padding: 0;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.card-botao {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+    gap: 0.5rem;
+}
+
+.card-botao button {
+    background-color: var(--cor-texto-escuro);
+    color: #ffffff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.card-botao button:hover {
+    background-color: var(--cor-texto-corpo);
+    opacity: 0.9;
+}
+
+@media (min-width: 960px) {
+    body {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .sidebar {
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        padding: 1.5rem;
+        align-items: center;
+        border-bottom: none;
+        border-right: 1px solid #D1D5DB;
+        background-color: #E5E7EB;
+        flex-shrink: 0;
+    }
+
+    .icones-direita {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin: 0;
+    }
+
+    .profile img {
+        width: 3.5rem;
+        height: auto;
+    }
+
+    .logout img {
+        width: 2.875rem;
+        height: auto;
+    }
+
+    .basket img {
+        width: 3.5rem;
+        height: auto;
+    }
+
+    .itens {
+        flex: 1;
+        min-width: 0;
+        overflow-y: auto;
+        padding: 2rem;
+    }
+
+    .painel-caixa {
+        height: 100%;
+        padding: 32px;
+    }
+
+    .titulo-painel {
+        font-size: 2.5rem;
+    }
+
+    .card {
+        width: 160px;
+        padding: 16px;
+    }
+
+    .info {
+        font-size: 0.9rem;
+    }
+
+    .area {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-lote {
+        width: 35.125rem;
+        height: 46rem;
+        font-size: 1.8rem;
+        margin: 0;
+    }
+
+   /* Informações do lote */
+
+    .informacoes {
+        gap: 0; /* Remove o gap antigo se estivesse a interferir */
+        line-height: 3.5rem; /* Espaçamento maior para ecrãs maiores */
+    }
+
+    .informacoes p {
+        line-height: inherit;
+    }
+
+    .foto img {
+        width: 12rem;
+        height: 12rem;
+    }
+}
