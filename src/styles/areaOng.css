@@ -1,13 +1,13 @@
-.sidebar{
+.sidebar {
     grid-area: sidebar;
-    background-color: var(--gradiente-inicio);
+    background-color: var(--gradiente-inicio, #10B981);
     padding: 0 1rem;
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #D1D5DB;
 }
-
 .icones-esquerda{
     margin: 0.5rem 0.5rem 0.5rem;
 }

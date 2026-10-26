@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 // [2] Redirecionamento dinâmico baseado na role contida ou simulada
                 if (isOng) {
-                    window.location.href = "painel-ong.html"; // Página restrita da ONG
+                    window.location.href = "Área restrita ONG-mercado.html"; // Página restrita da ONG
                 } else {
                     window.location.href = "painel-empresa.html"; // Página restrita da Empresa
                 }
