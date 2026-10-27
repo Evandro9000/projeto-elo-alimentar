@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Acompanhe e gerencie todos os lotes doados na plataforma Elo Alimentar.">
+    <title>Elo Alimentar | Gerenciar Doações</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/criarDoacao.css">
+    <link rel="stylesheet" href="../styles/gerenciar-doacoes.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Menu lateral">
+        <button type="button" class="sidebar__toggle" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+            <img src="../images/menu.svg" alt="">
+        </button>
+
+        <nav class="menu" id="menu-principal" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <img src="../images/dashboard.svg" alt="">
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="criar-doacao.html">
+                        <img src="../images/criar-doacao.svg" alt="">
+                        <span>Criar doação</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="gerenciar-doacoes.html" aria-current="page">
+                        <img src="../images/gerenciar-doacoes.svg" alt="">
+                        <span>Gerenciar doações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <a href="login.html" class="sair">
+            <img src="../images/logout.svg" alt="">
+            <span>Sair</span>
+        </a>
+    </aside>
+
+    <div class="conteudo">
+
+        <!-- CABEÇALHO -->
+        <header class="topo">
+            <a href="Perfil.html" class="perfil" aria-label="Meu perfil">
+                <img src="../images/Perfil.svg" alt="">
+                <span>Meu perfil</span>
+            </a>
+            <div class="boas-vindas">
+                <p class="saudacao">Olá Supermercado....</p>
+                <p class="slogan">Juntos contra o desperdício de alimentos!</p>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main>
+            <div class="titulo">
+                <a href="Área restrita ONG-mercado.html" class="btn-voltar" aria-label="Voltar">
+                    <img src="../images/Seta.svg" alt="">
+                </a>
+                <h1>Gerenciar doações</h1>
+                <p>Acompanhe e gerencie todos os lotes</p>
+            </div>
+
+            <section class="painel painel--tabela" aria-label="Lista de doações">
+
+                <div class="ferramentas">
+                    <form class="busca" role="search" action="#">
+                        <label class="sr-only" for="busca">Buscar doações</label>
+                        <button type="submit" class="busca__btn" aria-label="Buscar">
+                            <img src="../images/buscar.svg" alt="">
+                        </button>
+                        <input type="search" id="busca" name="busca" placeholder="Buscar...">
+                    </form>
+
+                    <div class="filtro">
+                        <label class="sr-only" for="filtro">Filtrar por status</label>
+                        <select id="filtro" name="filtro">
+                            <option value="" selected>Filtros</option>
+                            <option value="disponivel">Disponível</option>
+                            <option value="em-coleta">Em coleta</option>
+                            <option value="pendente">Pendente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tabela-wrap" role="region" aria-label="Tabela de doações" tabindex="0">
+                    <table class="tabela">
+                        <caption class="sr-only">Doações cadastradas, com quantidade, categoria, validade, ONG e status</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Produto</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Validade</th>
+                                <th scope="col">ONG</th>
+                                <th scope="col" class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-status="disponivel">
+                                <th scope="row">Arroz</th>
+                                <td>20kg</td>
+                                <td>Mercearia salgada</td>
+                                <td>20/09</td>
+                                <td>ONG...</td>
+                                <td><span class="status status--disponivel">Disponível</span></td>
+                            </tr>
+                            <tr data-status="em-coleta">
+                                <th scope="row">Pães</th>
+                                <td>10un</td>
+                                <td>Padaria</td>
+                                <td>18/09</td>
+                                <td>ONG...</td>
+                                <td><span class="status status--em-coleta">Em coleta</span></td>
+                            </tr>
+                            <tr data-status="pendente">
+                                <th scope="row">Leite</th>
+                                <td>15L</td>
+                                <td>Laticínios</td>
+                                <td>17/09</td>
+                                <td>ONG...</td>
+                                <td><span class="status status--pendente">Pendente</span></td>
+                            </tr>
+                            <tr class="preenchimento" aria-hidden="true">
+                                <td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="sem-resultados" id="sem-resultados" hidden>Nenhuma doação encontrada.</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="../utils/doacão.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cadastre um novo lote de alimentos para doação na plataforma Elo Alimentar.">
+    <title>Elo Alimentar | Criar Doação</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/criarDoacao.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Menu lateral">
+        <button type="button" class="sidebar__toggle" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+            <img src="../images/menu.svg" alt="">
+        </button>
+
+        <nav class="menu" id="menu-principal" aria-label="Menu principal">
+            <ul>
+                <li>
+                    <a href="dashboard.html">
+                        <img src="../images/dashboard.svg" alt="">
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="criar-doacao.html" aria-current="page">
+                        <img src="../images/criar-doacao.svg" alt="">
+                        <span>Criar doação</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="gerenciar-doacoes.html">
+                        <img src="../images/gerenciar-doacoes.svg" alt="">
+                        <span>Gerenciar doações</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <a href="login.html" class="sair">
+            <img src="../images/logout.svg" alt="">
+            <span>Sair</span>
+        </a>
+    </aside>
+
+    <div class="conteudo">
+
+        <!-- CABEÇALHO -->
+        <header class="topo">
+            <a href="Perfil.html" class="perfil" aria-label="Meu perfil">
+                <img src="../images/Perfil.svg" alt="">
+                <span>Meu perfil</span>
+            </a>
+            <div class="boas-vindas">
+                <p class="saudacao">Olá Supermercado....</p>
+                <p class="slogan">Juntos contra o desperdício de alimentos!</p>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main>
+            <div class="titulo">
+                <a href="Área restrita ONG-mercado.html" class="btn-voltar" aria-label="Voltar">
+                    <img src="../images/Seta.svg" alt="">
+                </a>
+                <h1>Criar doação</h1>
+                <p>Preencha as informações dos alimentos que deseja doar</p>
+            </div>
+
+            <section class="painel" aria-label="Formulário de doação">
+                <form action="#" method="post">
+                    <fieldset>
+                        <legend>Informações do lote</legend>
+
+                        <div class="campos">
+                            <div class="campo campo--produto">
+                                <label for="produto">Produto <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="produto" name="produto" placeholder="Digite aqui o nome do produto" required>
+                            </div>
+
+                            <div class="campo campo--categoria">
+                                <label for="categoria">Categoria <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <select id="categoria" name="categoria" required>
+                                    <option value="" selected disabled>Laticínios , padaria , açougue...etc</option>
+                                    <option value="hortifruti">Hortifrúti</option>
+                                    <option value="laticinios">Laticínios</option>
+                                    <option value="padaria">Padaria</option>
+                                    <option value="acougue">Açougue</option>
+                                    <option value="enlatados">Enlatados e conservas</option>
+                                    <option value="bebidas">Bebidas</option>
+                                    <option value="outros">Outros</option>
+                                </select>
+                            </div>
+
+                            <div class="campo campo--quantidade">
+                                <label for="quantidade">Quantidade <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="quantidade" name="quantidade" placeholder="Ex.:10kg , 20unid de 100g...etc" required>
+                            </div>
+
+                            <div class="campo campo--validade">
+                                <label for="validade">Data de validade <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="date" id="validade" name="validade" required>
+                            </div>
+
+                            <div class="campo campo--descricao">
+                                <label for="descricao">Descrição adicional</label>
+                                <div class="caixa">
+                                    <textarea id="descricao" name="descricao" maxlength="500" placeholder="Ex.:alimentos em bom estado, embalagem original..."></textarea>
+                                    <span class="contador" id="contador">0/500</span>
+                                </div>
+                            </div>
+
+                            <div class="campo campo--cep">
+                                <label for="cep">Endereço para coleta</label>
+                                <input type="text" id="cep" name="cep" placeholder="00000-000" inputmode="numeric" pattern="\d{5}-?\d{3}" maxlength="9" autocomplete="postal-code">
+                            </div>
+
+                            <div class="campo campo--complemento">
+                                <label for="complemento">Complemento <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="complemento" name="complemento" placeholder="casa, apartamento...etc" autocomplete="address-line2" required>
+                            </div>
+
+                            <div class="campo campo--numero">
+                                <label for="numero">Número <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="numero" name="numero" placeholder="digite seu número aqui" inputmode="numeric" required>
+                            </div>
+
+                            <div class="campo campo--bairro">
+                                <label for="bairro">Bairro <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="bairro" name="bairro" placeholder="digite o nome do seu bairro aqui" required>
+                            </div>
+
+                            <div class="campo campo--cidade">
+                                <label for="cidade">Cidade <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="cidade" name="cidade" placeholder="nome de sua cidade" autocomplete="address-level2" required>
+                            </div>
+
+                            <div class="campo campo--estado">
+                                <label for="estado">Estado <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="estado" name="estado" placeholder="digite seu Estado aqui" autocomplete="address-level1" required>
+                            </div>
+
+                            <div class="acoes">
+                                <button type="reset" class="btn">Limpar</button>
+                                <button type="submit" class="btn btn--principal">Cadastrar doação</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const sidebar = document.querySelector('.sidebar');
+        const toggle = sidebar.querySelector('.sidebar__toggle');
+        const desktop = window.matchMedia('(min-width: 960px)');
+
+        function definirMenu(aberto) {
+            sidebar.classList.toggle('is-open', aberto);
+            toggle.setAttribute('aria-expanded', aberto);
+            toggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+        }
+
+        definirMenu(desktop.matches);
+        desktop.addEventListener('change', (e) => definirMenu(e.matches));
+        toggle.addEventListener('click', () => definirMenu(!sidebar.classList.contains('is-open')));
+
+        const descricao = document.getElementById('descricao');
+        const contador = document.getElementById('contador');
+        const atualizarContador = () => { contador.textContent = descricao.value.length + '/500'; };
+
+        descricao.addEventListener('input', atualizarContador);
+        document.querySelector('form').addEventListener('reset', () => setTimeout(atualizarContador));
+    </script>
+</body>
+</html>
