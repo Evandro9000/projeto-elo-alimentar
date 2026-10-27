@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elo Alimentar | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="layout">
+
+        <!-- Menu lateral -->
+        <aside class="sidebar">
+            <div class="menu-icon">☰</div>
+
+            <nav class="menu">
+               
+           <a href="dashboard.html" class="menu-item">
+           <img src="https://cdn-icons-png.flaticon.com/128/1828/1828765.png" alt="Ícone Dashboard" 
+           class="icone-dashboard">
+           <span>Dashboard</span>
+           </a>
+
+
+              <a href="criar-doacoes.html" class="menu-item">
+                <img src="images/icone_criar_doações.webp" alt="Criar doação" class="icone-criar-doacao">
+                 <span>Criar doação</span>
+                        </a>
+
+                <a href="gerenciar-doacoes.html" class="menu-item">
+                <img src="images/icone_gerenciar_doações.png" alt="Gerenciar doação" class="icone-gerenciar-doacao">
+                 <span>Gerenciar doações</span>
+                        </a>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="main-content">
+
+            <!-- Cabeçalho -->
+            <header class="header">
+                <div class="profile">Meu perfil</div>
+
+                <div class="welcome">
+                    <h1>Olá Supermercado....</h1>
+                    <p>Juntos contra o desperdício de alimentos!</p>
+                </div>
+            </header>
+
+            <!-- Título do dashboard -->
+            <section class="page-title">
+                <a href="#" class="back-button" aria-label="Voltar">❮</a>
+                <h2>DASHBOARD</h2>
+            </section>
+
+            <!-- Indicadores -->
+            <section class="stats">
+
+                <article class="stat-card donations">
+                    <div class="stat-top">
+                        <h3>TOTAL DE DOAÇÕES</h3>
+                        <span class="stat-icon">📊</span>
+                    </div>
+                    <p class="stat-number">5.340 KG</p>
+                </article>
+
+                <article class="stat-card ngos">
+                    <div class="stat-top">
+                        <h3>ONGs ATENDIDAS</h3>
+                        <span class="round-icon">🤲</span>
+                    </div>
+                    <p class="stat-number">42</p>
+                    <span class="decoration">♡</span>
+                </article>
+
+                <article class="stat-card collection">
+                    <div class="stat-top">
+                        <h3>EM COLETA</h3>
+                        <span class="stat-icon">🚚</span>
+                    </div>
+                    <p class="stat-number">15</p>
+                    <span class="basket">🛒</span>
+                </article>
+
+            </section>
+
+            <!-- Últimas coletas -->
+            <section class="collections">
+                <div class="section-heading">
+                    <h2>Últimas coletas</h2>
+                    <a href="#todas-coletas" class="view-all mobile-view-all">
+                        Ver todas ↗
+                    </a>
+                </div>
+
+                <div class="collections-panel" id="todas-coletas">
+
+                    <article class="collection-item">
+                        <img
+                            src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=240&q=80"
+                            alt="Frutas e verduras frescas"
+                        >
+                        <div class="collection-info">
+                            <h3>Frutas e verduras</h3>
+                            <p>Hortifruti - val.: DD/MM/AAAA</p>
+                        </div>
+                    </article>
+
+                    <article class="collection-item">
+                        <img
+                            src="https://images.unsplash.com/photo-1601599963565-b7ba29c8e3ff?auto=format&fit=crop&w=240&q=80"
+                            alt="Prateleiras de bebidas"
+                        >
+                        <div class="collection-info">
+                            <h3>Bebidas</h3>
+                            <p>Seção do fundo - val.: DD/MM/AAAA</p>
+                        </div>
+                    </article>
+
+                    <article class="collection-item">
+                        <img
+                            src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=240&q=80"
+                            alt="Pães frescos na padaria"
+                        >
+                        <div class="collection-info">
+                            <h3>Pães e confeitaria</h3>
+                            <p>Padaria - val.: DD/MM/AAAA</p>
+                        </div>
+                    </article>
+
+                    <article class="collection-item">
+                        <img
+                            src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=240&q=80"
+                            alt="Carnes frescas no açougue"
+                        >
+                        <div class="collection-info">
+                            <h3>Açougue e peixaria</h3>
+                            <p>Área fria - val.: DD/MM/AAAA</p>
+                        </div>
+                    </article>
+
+                    <a href="#todas-coletas" class="view-all desktop-view-all">
+                        Ver todas <span>↗</span>
+                    </a>
+
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>Elo Alimentar © 2026 — Juntos contra o desperdício.</p>
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
