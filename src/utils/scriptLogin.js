@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Tokens simulados baseados na aula (com payloads diferentes para ONG e Empresa)
     // Payload ONG codificado em Base64 simulado: {"id":123,"name":"ONG Esperança","role":"ong"}
-    const tokenOng = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJuYW1lIjoiT05HIEVzcGVyYW5cdTAwZTdhIiwicm9sZSI6Im9uZyIsImlhdCI6MTc1OTk4MTMxNywiZXhwIjoxNzU5OTg0OTE3f0.b1KfcSFInRwYnvRA0Ae5jYuL59KZmCsufPgISNGq0X0";
+    const tokenOng = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIzLCJuYW1lIjoiT05HIEVzcGVyYW7Dp2EiLCJyb2xlIjoib25nIiwiaWF0IjoxNzU5OTgxMzE3LCJleHAiOjE3NTk5ODQ5MTd9.DCviSXJY3L30EGAwrVN5Nszqxh5WdKO9SkNambqDbOM";
     
     // Payload Empresa codificado em Base64 simulado: {"id":456,"name":"Empresa Doadora","role":"empresa"}
     const tokenEmpresa = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NDU2LCJuYW1lIjoiRW1wcmVzYSBEb2Fkb3JhIiwicm9sZSI6ImVtcHJlc2EiLCJpYXQiOjE3NTk5ODEzMTcsImV4cCI6MTc1OTk4NDE3f0.X0KfcSFInRwYnvRA0Ae5jYuL59KZmCsufPgISNGq0Ab1K";
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 // [2] Redirecionamento dinâmico baseado na role contida ou simulada
                 if (isOng) {
-                    window.location.href = "Área restrita ONG-mercado.html"; // Página restrita da ONG
+                    window.location.href = "area-restrita-ong-mercado.html"; // Página restrita da ONG
                 } else {
                     window.location.href = "painel-empresa.html"; // Página restrita da Empresa
                 }

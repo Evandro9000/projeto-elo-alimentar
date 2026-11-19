@@ -1,6 +1,8 @@
+// TOKEN PARA CONFIRMAR LOGIN
+
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem("token");
-
+    console.log("Token lido do localStorage:", token); // Para saber se o token foi lido corretamente
     // 1. Bloqueia o acesso caso o token não exista
     if (!token) {
         alert("Acesso negado. Faça login para continuar.");
@@ -35,6 +37,30 @@ document.addEventListener("DOMContentLoaded", () => {
         btnLogout.addEventListener("click", () => {
             localStorage.removeItem("token");
             window.location.href = "index.html";
+        });
+    }
+});
+
+// INTERATIVIDADE DA PÁGINA
+document.addEventListener("DOMContentLoaded", ()=> {
+    const addLotesBotao = document.getElementById("add");
+
+    if(addLotesBotao){
+        addLotesBotao.addEventListener("click", ()=>{
+            const lote = {
+                id: addLotesBotao.dataset.id || "1",
+                quantidade: 1
+            };
+            let meulote = JSON.parse(localStorage.getItem("meulote")) || [];
+
+            const existeNoCarrinho = meulote.findIndex(item => item.id === lote.id);
+
+            if(existeNoCarrinho>=0) {
+                alert("Este lote já está no carrinho.");
+                return;1;
+            }
+            meulote.push(lote);
+            localStorage.setItem("meulote", JSON.stringify(meulote));
         });
     }
 });
