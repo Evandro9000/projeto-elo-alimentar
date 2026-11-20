@@ -31,36 +31,53 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "login.html";
     }
 
-    // 4. Botão de Logout
-    const btnLogout = document.getElementById("logout-btn");
+    // INTERATIVIDADE DA PÁGINA
+
+    // botão "Detalhes"
+    const btnDetalhes = document.querySelector(".detalhes");
+    btnDetalhes.addEventListener("click", (event)=> {
+        window.location.href = "detalhes-do-lote.html";
+    });
+
+
+    // logout
+    const btnLogout = document.querySelector(".logout");
     if (btnLogout) {
-        btnLogout.addEventListener("click", () => {
+        btnLogout.addEventListener("click", (event) => {
+            event.preventDefault();
             localStorage.removeItem("token");
             window.location.href = "index.html";
         });
     }
-});
 
-// INTERATIVIDADE DA PÁGINA
-document.addEventListener("DOMContentLoaded", ()=> {
-    const addLotesBotao = document.getElementById("add");
+    //adicionar lote no carrinho
+    const addLotesBotao = document.querySelectorAll(".add");
+    addLotesBotao.forEach((botaoAdd)=>{
 
-    if(addLotesBotao){
-        addLotesBotao.addEventListener("click", ()=>{
+        botaoAdd.addEventListener("click", ()=>{
+            const idlote = botaoAdd.dataset.id;
+            if (!idlote) {
+            console.error("Botão .add sem atributo data-id.");
+            return;
+            }
+
             const lote = {
-                id: addLotesBotao.dataset.id || "1",
+                id: idlote,
                 quantidade: 1
             };
+
             let meulote = JSON.parse(localStorage.getItem("meulote")) || [];
 
-            const existeNoCarrinho = meulote.findIndex(item => item.id === lote.id);
+            const existeNoCarrinho = meulote.some((item) => item.id === lote.id);
 
-            if(existeNoCarrinho>=0) {
+            if(existeNoCarrinho) {
                 alert("Este lote já está no carrinho.");
-                return;1;
+                return;
             }
             meulote.push(lote);
             localStorage.setItem("meulote", JSON.stringify(meulote));
+            alert("Lote adicionado ao carrinho!");
         });
-    }
+    });
 });
+
