@@ -1,6 +1,12 @@
+console.log("Arquivo detalheLote.js carregado!");
+
 document.addEventListener("DOMContentLoaded", ()=> {
+    console.log("Página carregada!");
+
     const params = new URLSearchParams(window.location.search);
     const idLote = params.get("id");
+
+    console.log("ID recebido:", idLote);
 
     const lotes = {
         "1": {
@@ -22,7 +28,11 @@ document.addEventListener("DOMContentLoaded", ()=> {
             codigo: "LOT-002"
         }
     };
-    const loteSelecionado = lotes[idLote];
+
+    const loteSelecionado = lotes[idLote] ?? Object.values(lotes).find(
+        lote => lote.codigo === idLote
+    );
+    console.log("Lote encontrado:", loteSelecionado);
     const cardLote = document.querySelector(".card-lote");
 
     if (!loteSelecionado) {
@@ -48,7 +58,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     if(addInfo) {
         const linhaDaValidade = loteSelecionado.validade ? `Data de validade: ${loteSelecionado.validade}<br>`: "";
         addInfo.innerHTML = `
-        Endereço: ${loteSelecionado.endereco}<br>
+        Endereço: ${loteSelecionado.local}<br>
         Produto: ${loteSelecionado.produto}<br>
         Quantidade: ${loteSelecionado.quantidade}<br>
         ${linhaDaValidade}Tipo de entrega: ${loteSelecionado.entrega}<br>
@@ -97,6 +107,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
             atualizarBotaoVisivel();
         }
     });
+
     // Botão de Logout
     const btnLogout = document.querySelector(".logout");
     if (btnLogout) {

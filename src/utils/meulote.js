@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded",()=> {
             nome: "Tomate e tomate cereja",
             mercado: "Supermercado Lontra",
             imagem: "../images/tomate.png"
+        },
+        "2": {
+            id: "2",
+            nome: "Feijão Carioca, Feijão Preto, Arroz branco",
+            mercado: "Mercado do Zé",
+            imagem: "../images/grãos.png"
         }
-       // "2": {
-          //  id: "2",
-           // nome: "Feijão Carioca, Feijão Preto, Arroz branco",
-            //mercado: "Mercado do Zé",
-            //imagem: "../images/grãos.png"
-        //}
     };
 
     let meulote = JSON.parse(localStorage.getItem("meulote")) || [];
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded",()=> {
             grupocard.classList.add("grupo-card");
 
             grupocard.innerHTML = `
-            <a  href="detalhes-do-lote.html?id = ${encodeURIComponent(lote.id)}" ><article class="card">
+            <a  href="detalhes-do-lote.html?id=${encodeURIComponent(lote.id)}" ><article class="card">
                         <figure class="foto">
                             <img src="${lote.imagem}" alt="${lote.nome}">
                         </figure>
