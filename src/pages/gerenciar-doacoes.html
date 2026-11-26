@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/criarDoacao.css">
     <link rel="stylesheet" href="../styles/gerenciar-doacoes.css">
+    <script src="../utils/token-confirmacao-login.js"></script>
     <script src="../utils/gerenciardoacao.js"></script>
 </head>
 <body>
@@ -56,10 +58,11 @@
 
         <!-- CABEÇALHO -->
         <header class="topo">
-            <a href="Perfil.html" class="perfil" aria-label="Meu perfil">
+            <a href="perfil-varejo.html" class="perfil" aria-label="Meu perfil">
                 <img src="../images/Perfil.svg" alt="">
                 <span>Meu perfil</span>
             </a>
+
             <div class="boas-vindas">
                 <p class="saudacao">Olá Supermercado....</p>
                 <p class="slogan">Juntos contra o desperdício de alimentos!</p>
@@ -69,9 +72,10 @@
         <!-- CONTEÚDO PRINCIPAL -->
         <main>
             <div class="titulo">
-                <a href="area-restrita-ong-mercado.html" class="btn-voltar" aria-label="Voltar">
+                <a href="dashboard.html" class="btn-voltar" aria-label="Voltar">
                     <img src="../images/Seta.svg" alt="">
                 </a>
+
                 <h1>Gerenciar doações</h1>
                 <p>Acompanhe e gerencie todos os lotes</p>
             </div>
@@ -81,14 +85,17 @@
                 <div class="ferramentas">
                     <form class="busca" role="search" action="#">
                         <label class="sr-only" for="busca">Buscar doações</label>
+
                         <button type="submit" class="busca__btn" aria-label="Buscar">
                             <img src="../images/buscar.svg" alt="">
                         </button>
+
                         <input type="search" id="busca" name="busca" placeholder="Buscar...">
                     </form>
 
                     <div class="filtro">
                         <label class="sr-only" for="filtro">Filtrar por status</label>
+
                         <select id="filtro" name="filtro">
                             <option value="" selected>Filtros</option>
                             <option value="disponivel">Disponível</option>
@@ -101,6 +108,7 @@
                 <div class="tabela-wrap" role="region" aria-label="Tabela de doações" tabindex="0">
                     <table class="tabela">
                         <caption class="sr-only">Doações cadastradas, com quantidade, categoria, validade, ONG e status</caption>
+
                         <thead>
                             <tr>
                                 <th scope="col">Produto</th>
@@ -111,43 +119,64 @@
                                 <th scope="col" class="col-status">Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+
+                        <tbody id="tabela-doacoes">
                             <tr data-status="disponivel">
                                 <th scope="row">Arroz</th>
                                 <td>20kg</td>
                                 <td>Mercearia salgada</td>
                                 <td>20/09</td>
                                 <td>ONG...</td>
-                                <td><span class="status status--disponivel">Disponível</span></td>
+                                <td>
+                                    <span class="status status--disponivel">Disponível</span>
+                                </td>
                             </tr>
+
                             <tr data-status="em-coleta">
                                 <th scope="row">Pães</th>
                                 <td>10un</td>
                                 <td>Padaria</td>
                                 <td>18/09</td>
                                 <td>ONG...</td>
-                                <td><span class="status status--em-coleta">Em coleta</span></td>
+                                <td>
+                                    <span class="status status--em-coleta">Em coleta</span>
+                                </td>
                             </tr>
+
                             <tr data-status="pendente">
                                 <th scope="row">Leite</th>
                                 <td>15L</td>
                                 <td>Laticínios</td>
                                 <td>17/09</td>
                                 <td>ONG...</td>
-                                <td><span class="status status--pendente">Pendente</span></td>
+                                <td>
+                                    <span class="status status--pendente">Pendente</span>
+                                </td>
                             </tr>
+
                             <tr class="preenchimento" aria-hidden="true">
-                                <td></td><td></td><td></td><td></td><td></td><td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <p class="sem-resultados" id="sem-resultados" hidden>Nenhuma doação encontrada.</p>
+                <p class="sem-resultados" id="sem-resultados" hidden>
+                    Nenhuma doação encontrada.
+                </p>
+
             </section>
         </main>
     </div>
 
+    <script src="../utils/armazenamento.js"></script>
     <script src="../utils/doacão.js"></script>
+    <script src="../utils/gerenciar-doacao.js"></script>
+
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,12 +13,13 @@
 
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/criarDoacao.css">
+    <script src="../utils/token-confirmacao-login.js"></script>
 </head>
 <body>
 
     <!-- SIDEBAR -->
-    <aside class="sidebar" aria-label="Menu lateral">
-        <button type="button" class="sidebar__toggle" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+    <aside class="sidebar is-open" aria-label="Menu lateral">
+        <button type="button" class="sidebar__toggle" aria-controls="menu-principal" aria-expanded="true" aria-label="Fechar menu">
             <img src="../images/menu.svg" alt="">
         </button>
 
@@ -29,12 +31,14 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="criar-doacao.html" aria-current="page">
                         <img src="../images/criar-doacao.svg" alt="">
                         <span>Criar doação</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="gerenciar-doacoes.html">
                         <img src="../images/gerenciar-doacoes.svg" alt="">
@@ -54,10 +58,11 @@
 
         <!-- CABEÇALHO -->
         <header class="topo">
-            <a href="Perfil.html" class="perfil" aria-label="Meu perfil">
+            <a href="perfil-varejo.html" class="perfil" aria-label="Meu perfil">
                 <img src="../images/Perfil.svg" alt="">
                 <span>Meu perfil</span>
             </a>
+
             <div class="boas-vindas">
                 <p class="saudacao">Olá Supermercado....</p>
                 <p class="slogan">Juntos contra o desperdício de alimentos!</p>
@@ -67,9 +72,10 @@
         <!-- CONTEÚDO PRINCIPAL -->
         <main>
             <div class="titulo">
-                <a href="area-restrita-ong-mercado.html" class="btn-voltar" aria-label="Voltar">
+                <a href="dashboard.html" class="btn-voltar" aria-label="Voltar">
                     <img src="../images/Seta.svg" alt="">
                 </a>
+
                 <h1>Criar doação</h1>
                 <p>Preencha as informações dos alimentos que deseja doar</p>
             </div>
@@ -80,6 +86,7 @@
                         <legend>Informações do lote</legend>
 
                         <div class="campos">
+
                             <div class="campo campo--produto">
                                 <label for="produto">Produto <span class="obrigatorio" aria-hidden="true">*</span></label>
                                 <input type="text" id="produto" name="produto" placeholder="Digite aqui o nome do produto" required>
@@ -175,13 +182,16 @@
                                 <button type="reset" class="btn">Limpar</button>
                                 <button type="submit" class="btn btn--principal">Cadastrar doação</button>
                             </div>
+
                         </div>
                     </fieldset>
                 </form>
             </section>
         </main>
     </div>
+
     <script src="../utils/armazenamento.js"></script>
-    <script src="../utils/criar-doacao.js"> </script>
+    <script src="../utils/criar-doacao.js"></script>
+
 </body>
 </html>

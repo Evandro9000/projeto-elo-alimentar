@@ -1,5 +1,23 @@
 // TOKEN PARA CONFIRMAR LOGIN
 document.addEventListener("DOMContentLoaded", () => {
+    // INTERATIVIDADE DA PÁGINA
+
+    // botão "Detalhes"
+    const btnDetalhes = document.querySelector(".detalhes");
+    btnDetalhes.addEventListener("click", (event)=> {
+        window.location.href = "detalhes-do-lote.html";
+    });
+
+
+    // logout
+    const btnLogout = document.querySelector(".logout");
+    if (btnLogout) {
+        btnLogout.addEventListener("click", (event) => {
+            event.preventDefault();
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+        });
+    }
   const token = localStorage.getItem("token");
   console.log("Token lido do localStorage:", token);
 
