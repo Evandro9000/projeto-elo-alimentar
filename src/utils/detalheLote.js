@@ -1,109 +1,179 @@
-document.addEventListener("DOMContentLoaded", ()=> {
-    const params = new URLSearchParams(window.location.search);
-    const idLote = params.get("id");
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const idLote = params.get("id");
 
-    const lotes = {
-        "1": {
-            produto: "Tomate e tomate cereja",
-            quantidade: "5kg",
-            local: "Supermercado da Lontra",
-            validade: null,
-            entrega: "Retirada",
-            imagem: "../images/tomate.png",
-            codigo: "LOT-001"
-        },
-        "2": {
-            produto: "Feijão carioca, feijão preto, arroz branco",
-            quantidade: "50kg",
-            local: "Mercado do Zé",
-            validade: "20/07/3000",
-            entrega: "Envio ao destinatário",
-            imagem: "../images/grãos.png",
-            codigo: "LOT-002"
-        }
+  const CHAVE_DOACOES = "eloAlimentar_doacoes";
+  const CHAVE_CARRINHO = "meulote";
+
+  function normalizarDoacao(item) {
+    const endereco = item.endereco || {};
+    const partesEndereco = [
+      endereco.rua ? `${endereco.rua}${endereco.numero ? `, ${endereco.numero}` : ""}` : "",
+      endereco.complemento || "",
+      endereco.bairro || "",
+      endereco.cidade && endereco.estado
+        ? `${endereco.cidade} - ${endereco.estado}`
+        : endereco.cidade || endereco.estado || "",
+      endereco.cep ? `CEP: ${endereco.cep}` : "",
+    ].filter(Boolean);
+
+    const enderecoResumo =
+      item.local ||
+      [endereco.bairro, endereco.cidade, endereco.estado].filter(Boolean).join(" - ") ||
+      "Local não informado";
+
+    const codigoGerado =
+      item.codigo || `LOT-${String(item.id || "").slice(0, 6).toUpperCase()}`;
+
+    return {
+      id: String(item.id),
+      produto: item.produto || "Produto não informado",
+      categoria: item.categoria || "",
+      quantidade: item.quantidade || "Não informada",
+      local: item.local || "Não informado",
+      endereco:
+        partesEndereco.length > 0
+          ? partesEndereco.join(" | ")
+          : "Endereço não informado",
+      validade: item.validadeFormatada || item.validade || null,
+      entrega: item.entrega || "Retirada",
+      descricao: item.descricao || "",
+      imagem: item.imagem || "",
+      codigo: codigoGerado,
     };
-    const loteSelecionado = lotes[idLote];
-    const cardLote = document.querySelector(".card-lote");
+  }
 
-    if (!loteSelecionado) {
-        document.body.innerHTML = "<p>Lote não encontrado.</p>";
-        return;
+  function buscarDoacaoPorId(id) {
+    if (!id) return null;
+
+    try {
+      const salvas = JSON.parse(localStorage.getItem(CHAVE_DOACOES) || "[]");
+      if (!Array.isArray(salvas)) return null;
+
+      const encontrada = salvas.find((doacao) => doacao && String(doacao.id) === String(id));
+      return encontrada ? normalizarDoacao(encontrada) : null;
+    } catch (erro) {
+      console.error("Erro ao carregar lote do localStorage:", erro);
+      return null;
     }
+  }
 
-    //adiciona a imagem
-    const addImg = document.querySelector(".foto img");
-    if (addImg) {
-        addImg.src = loteSelecionado.imagem;
-        addImg.alt = loteSelecionado.alt || loteSelecionado.produto;
+  function escapeHTML(texto = "") {
+    return String(texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  const loteSelecionado = buscarDoacaoPorId(idLote);
+
+  if (!loteSelecionado) {
+    document.body.innerHTML = "<p>Lote não encontrado.</p>";
+    return;
+  }
+
+  // Adiciona a imagem (se houver)
+  const addImg = document.querySelector(".foto img");
+  if (addImg) {
+    if (loteSelecionado.imagem) {
+      addImg.src = loteSelecionado.imagem;
+      addImg.alt = loteSelecionado.produto;
+      addImg.style.display = "";
+    } else {
+      addImg.removeAttribute("src");
+      addImg.style.display = "none";
     }
+  }
 
-    //adiciona o endereço
-    const addLocal = document.querySelector(".local-lote");
-    if (addLocal){
-        addLocal.innerHTML = `<b>Local</b>: ${loteSelecionado.local}`;
-    }
+  // Adiciona o local
+  const addLocal = document.querySelector(".local-lote");
+  if (addLocal) {
+    addLocal.innerHTML = `<b>Local</b>: ${escapeHTML(loteSelecionado.local)}`;
+  }
 
-    //adiciona todas as informações no card
-    const addInfo = document.querySelector(".informacoes");
-    if(addInfo) {
-        const linhaDaValidade = loteSelecionado.validade ? `Data de validade: ${loteSelecionado.validade}<br>`: "";
-        addInfo.innerHTML = `
-        Endereço: ${loteSelecionado.endereco}<br>
-        Produto: ${loteSelecionado.produto}<br>
-        Quantidade: ${loteSelecionado.quantidade}<br>
-        ${linhaDaValidade}Tipo de entrega: ${loteSelecionado.entrega}<br>
-        Código do lote: ${loteSelecionado.codigo}`
-    }
+  // Adiciona todas as informações no card
+  const addInfo = document.querySelector(".informacoes");
+  if (addInfo) {
+    const linhaCategoria = loteSelecionado.categoria
+      ? `Categoria: ${escapeHTML(loteSelecionado.categoria)}<br>`
+      : "";
+    const linhaValidade = loteSelecionado.validade
+      ? `Data de validade: ${escapeHTML(loteSelecionado.validade)}<br>`
+      : "";
+    const linhaDescricao = loteSelecionado.descricao
+      ? `Descrição: ${escapeHTML(loteSelecionado.descricao)}<br>`
+      : "";
 
-    //Botão detalhe, desativa de o item estiver no carrinho
-    const btnAdd = document.querySelector(".add");
-    const boxBotao = document.querySelector(".card-botao");
+    addInfo.innerHTML = `
+      <strong>Endereço: ${escapeHTML(loteSelecionado.endereco)}</strong>
+      Produto: ${escapeHTML(loteSelecionado.produto)}<br>
+      ${linhaCategoria}
+      Quantidade: ${escapeHTML(loteSelecionado.quantidade)}<br>
+      ${linhaValidade}
+      ${linhaDescricao}
+      Tipo de entrega: ${escapeHTML(loteSelecionado.envio)}<br>
+      Código do lote: ${escapeHTML(loteSelecionado.codigo)}
+    `;
+  }
 
-    function itemNoCarrinho(){
-        const meulote = JSON.parse(localStorage.getItem("meulote")) || [];
-        return meulote.some((item) => String(item.id) === String(idLote));
-    }
+  // Botão adicionar lote, oculta se já estiver no carrinho
+  const btnAdd = document.querySelector(".add");
+  const boxBotao = document.querySelector(".card-botao");
 
-    function atualizarBotaoVisivel (){
-        const noCarrinho = itemNoCarrinho();
-        if(btnAdd) {
-            btnAdd.style.display = noCarrinho ? "none":"";
-        }
-        if(boxBotao){
-            boxBotao.style.display = noCarrinho ? "none":"";
-        }
-    }
+  function itemNoCarrinho() {
+    const meulote = JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || "[]");
+    return meulote.some((item) => String(item.id) === String(idLote));
+  }
 
-    atualizarBotaoVisivel();
-
+  function atualizarBotaoVisivel() {
+    const noCarrinho = itemNoCarrinho();
     if (btnAdd) {
-        btnAdd.addEventListener("click", () => {
-            let meulote = JSON.parse(localStorage.getItem("meulote")) || [];
-            if (meulote.some((item) => String(item.id) === String(idLote))) {
-                atualizarBotaoVisivel();
-                return;
-            }
-
-            meulote.push({ id: String(idLote), quantidade: 1 });
-            localStorage.setItem("meulote", JSON.stringify(meulote));
-            atualizarBotaoVisivel();
-            alert("Lote adicionado ao carrinho!");
-        });
+      btnAdd.style.display = noCarrinho ? "none" : "";
     }
+    if (boxBotao) {
+      boxBotao.style.display = noCarrinho ? "none" : "";
+    }
+  }
 
-    // Caso o usuário remova o lote em outra aba e volte para esta
-    window.addEventListener("storage", (event) => {
-        if (event.key === "meulote") {
-            atualizarBotaoVisivel();
-        }
+  atualizarBotaoVisivel();
+
+  if (btnAdd) {
+    btnAdd.addEventListener("click", () => {
+      let meulote = JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || "[]");
+      if (meulote.some((item) => String(item.id) === String(idLote))) {
+        atualizarBotaoVisivel();
+        return;
+      }
+
+      meulote.push({
+        id: String(loteSelecionado.id),
+        produto: loteSelecionado.produto,
+        quantidade: 1,
+        quantidadeLote: loteSelecionado.quantidade,
+        imagem: loteSelecionado.imagem,
+        local: loteSelecionado.local,
+      });
+      localStorage.setItem(CHAVE_CARRINHO, JSON.stringify(meulote));
+      atualizarBotaoVisivel();
+      alert("Lote adicionado ao carrinho!");
     });
-    // Botão de Logout
-    const btnLogout = document.querySelector(".logout");
-    if (btnLogout) {
-        btnLogout.addEventListener("click", (event) => {
-            event.preventDefault();
-            localStorage.removeItem("token");
-            window.location.href = "index.html";
-        });
+  }
+
+  // Caso o usuário remova o lote em outra aba e volte para esta
+  window.addEventListener("storage", (event) => {
+    if (event.key === CHAVE_CARRINHO || event.key === CHAVE_DOACOES) {
+      atualizarBotaoVisivel();
     }
+  });
+
+  // Botão de Logout
+  const btnLogout = document.querySelector(".logout");
+  if (btnLogout) {
+    btnLogout.addEventListener("click", (event) => {
+      event.preventDefault();
+      localStorage.removeItem("token");
+      window.location.href = "index.html";
+    });
+  }
 });

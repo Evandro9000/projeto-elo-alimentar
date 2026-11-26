@@ -12,7 +12,6 @@
 
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/criarDoacao.css">
-    <script src="../utils/criar-doacao.js"></script>
 </head>
 <body>
 
@@ -76,7 +75,7 @@
             </div>
 
             <section class="painel" aria-label="Formulário de doação">
-                <form action="#" method="post">
+                <form id="form-doacao" action="#" method="post">
                     <fieldset>
                         <legend>Informações do lote</legend>
 
@@ -118,34 +117,58 @@
                                 </div>
                             </div>
 
+                            <div class="campo nome-local">
+                                <label for="local">Nome do Estabelecimento<span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="local" name="local" placeholder="Digite o nome do seu Estabelecimento" autocomplete="address-line3" required>
+                            </div>
+
                             <div class="campo campo--cep">
-                                <label for="cep">Endereço para coleta</label>
+                                <label for="cep">Endereço para coleta<span class="obrigatorio" aria-hidden="true">*</span></label>
                                 <input type="text" id="cep" name="cep" placeholder="00000-000" inputmode="numeric" pattern="\d{5}-?\d{3}" maxlength="9" autocomplete="postal-code">
                             </div>
 
                             <div class="campo campo--complemento">
-                                <label for="complemento">Complemento <span class="obrigatorio" aria-hidden="true">*</span></label>
-                                <input type="text" id="complemento" name="complemento" placeholder="casa, apartamento...etc" autocomplete="address-line2" required>
+                                <label for="complemento">Complemento</label>
+                                <input type="text" id="complemento" name="complemento" placeholder="Casa, apartamento...etc" autocomplete="address-line2" required>
+                            </div>
+
+                            <div class="campo rua">
+                                <label for="rua">Rua<span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="rua" name="rua" placeholder="Digite o nome da sua rua" autocomplete="address-line3" required>
                             </div>
 
                             <div class="campo campo--numero">
                                 <label for="numero">Número <span class="obrigatorio" aria-hidden="true">*</span></label>
-                                <input type="text" id="numero" name="numero" placeholder="digite seu número aqui" inputmode="numeric" required>
+                                <input type="text" id="numero" name="numero" placeholder="Digite seu número aqui" inputmode="numeric" required>
                             </div>
 
                             <div class="campo campo--bairro">
                                 <label for="bairro">Bairro <span class="obrigatorio" aria-hidden="true">*</span></label>
-                                <input type="text" id="bairro" name="bairro" placeholder="digite o nome do seu bairro aqui" required>
+                                <input type="text" id="bairro" name="bairro" placeholder="Digite o nome do seu bairro aqui" required>
                             </div>
 
                             <div class="campo campo--cidade">
                                 <label for="cidade">Cidade <span class="obrigatorio" aria-hidden="true">*</span></label>
-                                <input type="text" id="cidade" name="cidade" placeholder="nome de sua cidade" autocomplete="address-level2" required>
+                                <input type="text" id="cidade" name="cidade" placeholder="Nome de sua cidade" autocomplete="address-level2" required>
                             </div>
 
                             <div class="campo campo--estado">
                                 <label for="estado">Estado <span class="obrigatorio" aria-hidden="true">*</span></label>
-                                <input type="text" id="estado" name="estado" placeholder="digite seu Estado aqui" autocomplete="address-level1" required>
+                                <input type="text" id="estado" name="estado" placeholder="Digite seu Estado aqui (sigla)" autocomplete="address-level1" required>
+                            </div>
+
+                            <div class="campo campo--entrega">
+                                <label for="entrega">Tipo de Envio <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="text" id="entrega" name="estado" placeholder="Retirada no local, entrega..." autocomplete="address-level1" required>
+                            </div>
+
+                            <div class="campo campo--imagem">
+                                <label for="imagem">Foto do alimento <span class="obrigatorio" aria-hidden="true">*</span></label>
+                                <input type="file" id="imagem" name="imagem" accept="image/jpeg,image/png,image/webp">
+                                <div id="area-preview-imagem" style="display: none; margin-top: 8px;">
+                                    <img id="preview-imagem" alt="Prévia da imagem selecionada" style="display: block; max-width: 220px; border-radius: 8px;">
+                                    <button type="button" id="btn-remover-imagem" class="btn" style="margin-top: 8px;">Remover imagem</button>
+                                </div>
                             </div>
 
                             <div class="acoes">
@@ -158,7 +181,7 @@
             </section>
         </main>
     </div>
-
+    <script src="../utils/armazenamento.js"></script>
     <script src="../utils/criar-doacao.js"> </script>
 </body>
 </html>
