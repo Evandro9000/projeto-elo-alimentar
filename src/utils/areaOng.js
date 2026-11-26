@@ -47,16 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Logout
-  const btnLogout = document.querySelector(".logout");
-  if (btnLogout) {
-    btnLogout.addEventListener("click", (event) => {
-      event.preventDefault();
-      localStorage.removeItem("token");
-      window.location.href = "index.html";
-    });
-  }
-
   // VITRINE E CARRINHO
   const CHAVE_DOACOES = "eloAlimentar_doacoes";
   const CHAVE_CARRINHO = "meulote";
