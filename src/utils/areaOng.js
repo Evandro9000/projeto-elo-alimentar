@@ -1,52 +1,5 @@
-// TOKEN PARA CONFIRMAR LOGIN
+
 document.addEventListener("DOMContentLoaded", () => {
-    // INTERATIVIDADE DA PÁGINA
-
-    // botão "Detalhes"
-    const btnDetalhes = document.querySelector(".detalhes");
-    btnDetalhes.addEventListener("click", (event)=> {
-        window.location.href = "detalhes-do-lote.html";
-    });
-
-
-    // logout
-    const btnLogout = document.querySelector(".logout");
-    if (btnLogout) {
-        btnLogout.addEventListener("click", (event) => {
-            event.preventDefault();
-            localStorage.removeItem("token");
-            window.location.href = "index.html";
-        });
-    }
-  const token = localStorage.getItem("token");
-  console.log("Token lido do localStorage:", token);
-
-  // 1. Bloqueia o acesso caso o token não exista
-  if (!token) {
-    alert("Acesso negado. Faça login para continuar.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  try {
-    // 2. Descodifica o Payload do JWT
-    const payloadBase64 = token.split(".")[1];
-    const payloadJson = atob(payloadBase64.replace(/-/g, "+").replace(/_/g, "/"));
-    const usuario = JSON.parse(payloadJson);
-
-    console.log("Usuário autenticado:", usuario.name, "Perfil:", usuario.role);
-
-    const elementoNome = document.getElementById("nome-usuario");
-    if (elementoNome) {
-      elementoNome.textContent = usuario.name;
-    }
-  } catch (error) {
-    console.error("Token inválido:", error);
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-    return;
-  }
-
   // VITRINE E CARRINHO
   const CHAVE_DOACOES = "eloAlimentar_doacoes";
   const CHAVE_CARRINHO = "meulote";
@@ -55,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function lerDoacoes() {
     try {
-      const dados = JSON.parse(localStorage.getItem(CHAVE_DOACOES) || "[]");
+          const dados = JSON.parse(localStorage.getItem(CHAVE_DOACOES) || "[]");
       return Array.isArray(dados) ? dados : [];
     } catch (erro) {
       console.error("Erro ao ler doações:", erro);
@@ -125,9 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const doacoes = lerDoacoes();
+      const doacoes = lerDoacoes();
 
-    if (doacoes.length === 0) {
+       if (doacoes.length === 0) {
       vitrine.innerHTML = "<p>Nenhuma doação disponível na vitrine no momento.</p>";
       return;
     }
@@ -137,11 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function adicionarLoteAoCarrinho(idLote) {
     if (!idLote) return;
-
     const doacoes = lerDoacoes();
     const meulote = JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || "[]");
-
-    const existeNoCarrinho = meulote.some((item) => String(item.id) === String(idLote));
+     const existeNoCarrinho = meulote.some((item) => String(item.id) === String(idLote));
     if (existeNoCarrinho) {
       alert("Este lote já está no carrinho.");
       return;
@@ -173,7 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = `detalhes-do-lote.html?id=${encodeURIComponent(idLote)}`;
       }
     });
-  }
-
+     }
   renderizarVitrine();
 });
