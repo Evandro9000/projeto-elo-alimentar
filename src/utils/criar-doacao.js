@@ -462,7 +462,7 @@ function validarEntrega() {
 
   if (campoEntrega) {
     campoEntrega.addEventListener("input", () => {
-      if (campoEentrega.value.trim()) definirErro(campoEentrega, "");
+     if (campoEntrega.value.trim()) definirErro(campoEntrega, "");
     });
     campoEntrega.addEventListener("blur", validarEntrega);
   }
