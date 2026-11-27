@@ -1,191 +1,269 @@
-/* Elo Alimentar - armazenamento e utilidades compartilhadas
-   Carregue ESTE arquivo antes de criar-doacao.js, gerenciar-doacao.js e dashboard.js */
+/* =========================================================
+   ELO ALIMENTAR
+   Armazenamento e funções compartilhadas das doações
+   ========================================================= */
 
 const Elo = (() => {
+
   const CHAVE = "elo_doacoes";
 
+  /* ---------------- STATUS ---------------- */
+
   const STATUS = {
-    disponivel: { texto: "Disponível", classe: "status--disponivel" },
-    coleta: { texto: "Em coleta", classe: "status--em-coleta" },
-    pendente: { texto: "Pendente", classe: "status--pendente" },
+    disponivel: {
+      texto: "Disponível",
+      classe: "status--disponivel"
+    },
+
+    coleta: {
+      texto: "Em coleta",
+      classe: "status--coleta"
+    },
+
+    pendente: {
+      texto: "Pendente",
+      classe: "status--pendente"
+    }
   };
+
+
+  /* ---------------- LER DOAÇÕES ---------------- */
 
   function ler() {
     try {
-      const dados = JSON.parse(localStorage.getItem(CHAVE));
+      const dados = JSON.parse(
+        localStorage.getItem(CHAVE) || "[]"
+      );
+
       return Array.isArray(dados) ? dados : [];
-    } catch {
+
+    } catch (erro) {
+
+      console.error("Erro ao ler as doações:", erro);
+
       return [];
     }
   }
 
-  function gravar(lista) {
-    // Se estourar o limite do navegador, lança erro e o criar-doacao.js mostra o alerta
-    localStorage.setItem(CHAVE, JSON.stringify(lista));
+
+  /* ---------------- NORMALIZAR ---------------- */
+
+  function normalizar(doacao) {
+
+    const imagens = Array.isArray(doacao.imagens)
+      ? doacao.imagens
+      : (doacao.imagem ? [doacao.imagem] : []);
+
+    return {
+      ...doacao,
+
+      imagens: imagens,
+
+      // Mantém compatibilidade com códigos antigos
+      imagem: imagens[0] || "",
+
+      // Toda nova doação começa disponível
+      status: doacao.status || "disponivel",
+
+      // ONG ainda não definida
+      ong: doacao.ong || null
+    };
   }
 
-  async function listar() {
-    return ler(); // mais nova primeiro
+
+  /* ---------------- LISTAR ---------------- */
+
+  function listar() {
+
+    const lista = ler().map(normalizar);
+
+    return Promise.resolve(lista);
   }
 
-  async function salvar(doacao) {
-    const lista = ler();
-    const i = lista.findIndex((d) => d.id === doacao.id);
 
-    if (i >= 0) {
-      lista[i] = doacao;
+  /* ---------------- SALVAR ---------------- */
+
+  function salvar(doacao) {
+
+    const lista = ler().map(normalizar);
+
+    const novaDoacao = normalizar(doacao);
+
+    const indice = lista.findIndex(
+      item => item.id === novaDoacao.id
+    );
+
+    if (indice >= 0) {
+
+      // Atualiza uma doação existente
+      lista[indice] = novaDoacao;
+
     } else {
-      lista.unshift(doacao);
+
+      // Cria uma nova doação
+      lista.push(novaDoacao);
     }
 
-    gravar(lista);
-    return doacao;
+    localStorage.setItem(
+      CHAVE,
+      JSON.stringify(lista)
+    );
+
+    // Atualiza a página caso outro código esteja observando
+    window.dispatchEvent(
+      new StorageEvent("storage", {
+        key: CHAVE,
+        newValue: JSON.stringify(lista)
+      })
+    );
+
+    return Promise.resolve(novaDoacao);
   }
 
-  async function remover(id) {
-    gravar(ler().filter((d) => d.id !== id));
+
+  /* ---------------- REMOVER ---------------- */
+
+  function remover(id) {
+
+    const lista = ler().filter(
+      doacao => doacao.id !== id
+    );
+
+    localStorage.setItem(
+      CHAVE,
+      JSON.stringify(lista)
+    );
+
+    window.dispatchEvent(
+      new StorageEvent("storage", {
+        key: CHAVE,
+        newValue: JSON.stringify(lista)
+      })
+    );
+
+    return Promise.resolve();
   }
 
-  function criarId() {
-    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  }
 
-  function escapeHtml(valor) {
-    return String(valor ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#39;");
-  }
+  /* ---------------- OBSERVAR ALTERAÇÕES ---------------- */
 
-  // Aceita DD/MM/AAAA ou AAAA-MM-DD. Devolve Date ou null.
-  function parseData(valor) {
-    const s = String(valor || "").trim();
-    let dia, mes, ano;
-    let m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-
-    if (m) {
-      [, ano, mes, dia] = m;
-    } else {
-      m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-      if (!m) return null;
-      [, dia, mes, ano] = m;
-    }
-
-    const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
-
-    const valida =
-      d.getFullYear() === Number(ano) &&
-      d.getMonth() === Number(mes) - 1 &&
-      d.getDate() === Number(dia);
-
-    return valida ? d : null;
-  }
-
-  function formatarValidade(valor) {
-    const d = parseData(valor);
-    if (!d) return valor || "";
-
-    const dd = String(d.getDate()).padStart(2, "0");
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    return `${dd}/${mm}/${d.getFullYear()}`;
-  }
-
-  // Converte "10kg", "500g", "15L" em kg. Unidades (un, unid) não contam.
-  function quantidadeEmKg(texto) {
-    const m = String(texto || "")
-      .toLowerCase()
-      .replace(",", ".")
-      .match(/(\d+(?:\.\d+)?)\s*(kg|g|ml|l)?/);
-
-    if (!m) return 0;
-
-    const n = parseFloat(m[1]);
-
-    switch (m[2]) {
-      case "kg": return n;
-      case "g": return n / 1000;
-      case "l": return n;        // 1 L ≈ 1 kg
-      case "ml": return n / 1000;
-      default: return 0;
-    }
-  }
-
-  function mostrarErro(el, mensagem) {
-    if (!el) return;
-
-    const proximo = el.nextElementSibling;
-    if (proximo && proximo.classList.contains("erro-campo")) proximo.remove();
-
-    el.classList.remove("invalido");
-    el.removeAttribute("aria-invalid");
-
-    if (!mensagem) return;
-
-    el.classList.add("invalido");
-    el.setAttribute("aria-invalid", "true");
-
-    const aviso = document.createElement("span");
-    aviso.className = "erro-campo";
-    aviso.setAttribute("role", "alert");
-    aviso.style.cssText = "display:block;color:#c0392b;font-size:0.8rem;margin-top:4px;";
-    aviso.textContent = mensagem;
-    el.insertAdjacentElement("afterend", aviso);
-  }
-
-  // Reduz a imagem para caber no localStorage (máx. 800px, JPEG 70%)
-  function comprimirImagem(arquivo, maxLado = 800, qualidade = 0.7) {
-    return new Promise((resolve, reject) => {
-      const leitor = new FileReader();
-
-      leitor.onerror = () => reject(new Error("leitura"));
-      leitor.onload = () => {
-        const img = new Image();
-
-        img.onerror = () => reject(new Error("imagem"));
-        img.onload = () => {
-          const escala = Math.min(1, maxLado / Math.max(img.width, img.height));
-          const canvas = document.createElement("canvas");
-          canvas.width = Math.round(img.width * escala);
-          canvas.height = Math.round(img.height * escala);
-
-          const ctx = canvas.getContext("2d");
-          ctx.fillStyle = "#fff";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          resolve(canvas.toDataURL("image/jpeg", qualidade));
-        };
-
-        img.src = leitor.result;
-      };
-
-      leitor.readAsDataURL(arquivo);
-    });
-  }
-
-  // Avisa quando outra aba altera as doações
   function aoMudar(callback) {
-    window.addEventListener("storage", (e) => {
-      if (e.key === CHAVE || e.key === null) callback();
+
+    window.addEventListener("storage", evento => {
+
+      if (evento.key === CHAVE) {
+        callback();
+      }
+
     });
   }
+
+
+  /* ---------------- ESCAPAR HTML ---------------- */
+
+  function escapeHtml(valor = "") {
+
+    return String(valor).replace(
+      /[&<>"']/g,
+      caractere => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[caractere])
+    );
+  }
+
+
+  /* ---------------- FORMATAR DATA ---------------- */
+
+  function formatarValidade(valor = "") {
+
+    const partes = String(valor).match(
+      /^(\d{4})-(\d{2})-(\d{2})$/
+    );
+
+    if (!partes) {
+      return valor;
+    }
+
+    return `${partes[3]}/${partes[2]}/${partes[1]}`;
+  }
+
+
+  /* ---------------- CONVERTER QUANTIDADE PARA KG ---------------- */
+
+  function quantidadeEmKg(valor = "") {
+
+    const texto = String(valor)
+      .toLowerCase()
+      .replace(",", ".");
+
+    const numero = parseFloat(texto);
+
+    if (!Number.isFinite(numero)) {
+      return 0;
+    }
+
+    // Toneladas
+    if (
+      /\b(t|ton|tonelada|toneladas)\b/.test(texto)
+    ) {
+      return numero * 1000;
+    }
+
+    // Gramas
+    if (
+      /\b(g|gr|grama|gramas)\b/.test(texto)
+    ) {
+      return numero / 1000;
+    }
+
+    // Mililitros
+    if (
+      /\b(ml)\b/.test(texto)
+    ) {
+      return numero / 1000000;
+    }
+
+    // Litros
+    if (
+      /\b(l|lt|litro|litros)\b/.test(texto)
+    ) {
+      return numero;
+    }
+
+    // Se não houver unidade,
+    // considera o número como kg
+    return numero;
+  }
+
+
+  /* =========================================================
+     FUNÇÕES DISPONÍVEIS PARA OS OUTROS ARQUIVOS
+     ========================================================= */
 
   return {
+
+    CHAVE,
+
     STATUS,
-    PAGINA_GERENCIAR: "gerenciar-doacoes.html",
+
     listar,
+
     salvar,
+
     remover,
-    criarId,
-    escapeHtml,
-    parseData,
-    formatarValidade,
-    quantidadeEmKg,
-    mostrarErro,
-    comprimirImagem,
+
     aoMudar,
+
+    escapeHtml,
+
+    formatarValidade,
+
+    quantidadeEmKg
+
   };
+
 })();
