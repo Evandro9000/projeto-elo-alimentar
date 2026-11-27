@@ -1,4 +1,5 @@
 
+// Imagem cinza usada quando a doação não tem foto
 const FOTO_PADRAO =
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
