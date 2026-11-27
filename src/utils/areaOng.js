@@ -1,92 +1,129 @@
-// TOKEN PARA CONFIRMAR LOGIN
 
 document.addEventListener("DOMContentLoaded", () => {
-    const token = localStorage.getItem("token");
-    console.log("Token lido do localStorage:", token); // Para saber se o token foi lido corretamente
-    // 1. Bloqueia o acesso caso o token não exista
-    if (!token) {
-        alert("Acesso negado. Faça login para continuar.");
-        window.location.href = "login.html";
-        return;
-    }
+  // VITRINE E CARRINHO
+  const CHAVE_DOACOES = "eloAlimentar_doacoes";
+  const CHAVE_CARRINHO = "meulote";
 
+  const vitrine = document.getElementById("vitrine");
+
+  function lerDoacoes() {
     try {
-        // 2. Descodifica o Payload do JWT (parte central separada por pontos)
-        const payloadBase64 = token.split('.')[1];
-        const payloadJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
-        const usuario = JSON.parse(payloadJson);
+          const dados = JSON.parse(localStorage.getItem(CHAVE_DOACOES) || "[]");
+      return Array.isArray(dados) ? dados : [];
+    } catch (erro) {
+      console.error("Erro ao ler doações:", erro);
+      return [];
+    }
+  }
 
-        // 3. Validação de Segurança do Perfil (Ex: se estiver na pág da ONG mas o token for de empresa)
-        console.log("Usuário autenticado:", usuario.name, "Perfil:", usuario.role);
-        
-        // Exemplo de saudação na tela
-        const elementoNome = document.getElementById("nome-usuario");
-        if (elementoNome) {
-            elementoNome.textContent = usuario.name;
-        }
+  function escapeHTML(texto = "") {
+    return String(texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
 
-    } catch (error) {
-        console.error("Token inválido:", error);
-        localStorage.removeItem("token");
-        window.location.href = "login.html";
+  function formatarCategoria(slug = "") {
+    const mapa = {
+      hortifruti: "In natura: Hortifruti",
+      laticinios: "Laticínios",
+      padaria: "Padaria",
+      acougue: "Açougue",
+      enlatados: "Enlatados e conservas",
+      bebidas: "Bebidas",
+      outros: "Outros",
+    };
+    return mapa[slug] || slug || "Doação";
+  }
+
+  function criarCardHTML(item) {
+    const classeCategoria = escapeHTML(item.categoria || "outros");
+    const tituloCategoria = escapeHTML(formatarCategoria(item.categoria));
+    const nomeProduto = escapeHTML(item.produto || "Produto");
+    const quantidade = escapeHTML(item.quantidade || "");
+    const local = escapeHTML( item.local || "Local não informado");
+    const imgSrc = item.imagem ? escapeHTML(item.imagem) : "../images/tomate.png";
+    const legendaFoto = item.imagem
+      ? "Foto do lote"
+      : "Imagem meramente Ilustrativa";
+    const idSegura = escapeHTML(item.id);
+    const envio = escapeHTML(item.envio || "Não informado");
+
+    return `
+      <article class="card ${classeCategoria}" data-id="${idSegura}">
+        <div class="cabecalho">
+          <h3><i>${tituloCategoria}</i></h3>
+          <a class="foto"><img src="${imgSrc}" alt="Foto de ${nomeProduto}" /></a>
+          <p>${legendaFoto}</p>
+        </div>
+        <div class="card-content">
+          <p class="info">Informações:</p>
+          <p>Produto: ${nomeProduto}</p>
+          <p>Quantidade: ${quantidade}</p>
+          <p>Local: ${local}</p>
+          <p class="info">Tipo de Entrega: ${envio}</p>
+        </div>
+        <div class="card-botao">
+          <button type="button" class="add" data-id="${idSegura}">Adicionar Lote</button>
+          <button type="button" class="detalhes" data-id="${idSegura}">Detalhes</button>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderizarVitrine() {
+    if (!vitrine) {
+      console.warn("Elemento #vitrine não encontrado no HTML.");
+      return;
     }
 
-    // INTERATIVIDADE DA PÁGINA
+      const doacoes = lerDoacoes();
 
-    // botão "Detalhes"
-    const btnDetalhes = document.querySelector(".detalhes");
-    btnDetalhes.addEventListener("click", (event)=> {
-        window.location.href = "detalhes-do-lote.html";
-    });
-
-
-    // logout
-    const btnLogout = document.querySelector(".logout");
-    if (btnLogout) {
-        btnLogout.addEventListener("click", (event) => {
-            event.preventDefault();
-            localStorage.removeItem("token");
-            window.location.href = "index.html";
-        });
+       if (doacoes.length === 0) {
+      vitrine.innerHTML = "<p>Nenhuma doação disponível na vitrine no momento.</p>";
+      return;
     }
 
-    //adicionar lote no carrinho
-    const addLotesBotao = document.querySelectorAll(".add");
-    addLotesBotao.forEach((botaoAdd)=>{
+    vitrine.innerHTML = doacoes.map(criarCardHTML).join("");
+  }
 
-        botaoAdd.addEventListener("click", ()=>{
-            const idlote = botaoAdd.dataset.id;
-            if (!idlote) {
-            console.error("Botão .add sem atributo data-id.");
-            return;
-            }
+  function adicionarLoteAoCarrinho(idLote) {
+    if (!idLote) return;
+    const doacoes = lerDoacoes();
+    const meulote = JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || "[]");
+     const existeNoCarrinho = meulote.some((item) => String(item.id) === String(idLote));
+    if (existeNoCarrinho) {
+      alert("Este lote já está no carrinho.");
+      return;
+    }
 
-            const lote = {
-                id: idlote,
-                quantidade: 1
-            };
+    const doacaoEncontrada = doacoes.find((d) => String(d.id) === String(idLote));
+    const lote = doacaoEncontrada
+      ? { ...doacaoEncontrada, quantidadeCarrinho: 1 }
+      : { id: idLote, quantidade: 1 };
 
-            let meulote = JSON.parse(localStorage.getItem("meulote")) || [];
+    meulote.push(lote);
+    localStorage.setItem(CHAVE_CARRINHO, JSON.stringify(meulote));
+    alert("Lote adicionado ao carrinho!");
+  }
 
-            const existeNoCarrinho = meulote.some((item) => item.id === lote.id);
+  // Cliques nos botões "Adicionar Lote" (.add) e "Detalhes" (.detalhes)
+  if (vitrine) {
+    vitrine.addEventListener("click", (event) => {
+      const botaoAdd = event.target.closest(".add");
+      if (botaoAdd) {
+        adicionarLoteAoCarrinho(botaoAdd.dataset.id);
+        return;
+      }
 
-            if(existeNoCarrinho) {
-                alert("Este lote já está no carrinho.");
-                return;
-            }
-            meulote.push(lote);
-            localStorage.setItem("meulote", JSON.stringify(meulote));
-            alert("Lote adicionado ao carrinho!");
-        });
+      const botaoDetalhe = event.target.closest(".detalhes");
+      if (botaoDetalhe) {
+        const idLote = botaoDetalhe.dataset.id;
+        if (!idLote) return;
+        window.location.href = `detalhes-do-lote.html?id=${encodeURIComponent(idLote)}`;
+      }
     });
-
-        // Redirecionar para os detalhes do lote específico
-    const botoesDetalhes = document.querySelectorAll(".detalhes");
-    botoesDetalhes.forEach((botaoDetalhe, idx) => {
-        botaoDetalhe.addEventListener("click", () => {
-            const idLote = botaoDetalhe.dataset.id || String(idx + 1);
-            window.location.href = `detalhes-do-lote.html?id=${encodeURIComponent(idLote)}`;
-        });
-    });
+     }
+  renderizarVitrine();
 });
-
