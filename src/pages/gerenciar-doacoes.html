@@ -106,70 +106,22 @@
                 </div>
 
                 <div class="tabela-wrap" role="region" aria-label="Tabela de doações" tabindex="0">
-                    <table class="tabela">
-                        <caption class="sr-only">Doações cadastradas, com quantidade, categoria, validade, ONG e status</caption>
-
-                        <thead>
-                            <tr>
-                                <th scope="col">Produto</th>
-                                <th scope="col">Quantidade</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Validade</th>
-                                <th scope="col">ONG</th>
-                                <th scope="col" class="col-status">Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="tabela-doacoes">
-                            <tr data-status="disponivel">
-                                <th scope="row">Arroz</th>
-                                <td>20kg</td>
-                                <td>Mercearia salgada</td>
-                                <td>20/09</td>
-                                <td>ONG...</td>
-                                <td>
-                                    <span class="status status--disponivel">Disponível</span>
-                                </td>
-                            </tr>
-
-                            <tr data-status="em-coleta">
-                                <th scope="row">Pães</th>
-                                <td>10un</td>
-                                <td>Padaria</td>
-                                <td>18/09</td>
-                                <td>ONG...</td>
-                                <td>
-                                    <span class="status status--em-coleta">Em coleta</span>
-                                </td>
-                            </tr>
-
-                            <tr data-status="pendente">
-                                <th scope="row">Leite</th>
-                                <td>15L</td>
-                                <td>Laticínios</td>
-                                <td>17/09</td>
-                                <td>ONG...</td>
-                                <td>
-                                    <span class="status status--pendente">Pendente</span>
-                                </td>
-                            </tr>
-
-                            <tr class="preenchimento" aria-hidden="true">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <p class="sem-resultados" id="sem-resultados" hidden>
-                    Nenhuma doação encontrada.
-                </p>
-
+    <table class="tabela">
+        <caption class="sr-only">Doações cadastradas, com quantidade, categoria, validade, ONG e status</caption>
+        <thead>
+            <tr>
+                <th scope="col">Produto</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Validade</th>
+                <th scope="col">ONG</th>
+                <th scope="col" class="col-status">Status</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-doacoes"></tbody>
+    </table>
+</div>
+                <p class="sem-resultados" id="sem-resultados" hidden>Nenhuma doação encontrada.</p>
             </section>
         </main>
     </div>
