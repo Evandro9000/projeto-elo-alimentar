@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const campoEntrega = document.getElementById("entrega");
 
+  const campoDescricao = document.getElementById("descricao");
+  const contadorDescricao = document.getElementById("contador");
+
   if (form) {
     form.noValidate = true}
 
@@ -64,9 +67,13 @@ function definirErro(campo, mensagem) {
     if (!mensagem) {
       campo.classList.remove("invalido");
       if (erroEl) erroEl.remove();
+
+      const preenchido = String(campo.value || "").trim().length > 0;
+      campo.classList.toggle("valido", preenchido);
       return true;
     }
 
+    campo.classList.remove("valido");
     campo.classList.add("invalido");
     if (!erroEl) {
       erroEl = document.createElement("span");
@@ -76,6 +83,14 @@ function definirErro(campo, mensagem) {
     erroEl.textContent = mensagem;
     return false;
   }
+
+// Limpar campos
+function limparEstadosCampos() {
+  form?.querySelectorAll(".valido, .invalido").forEach((el) => {
+    el.classList.remove("valido", "invalido");
+  });
+  form?.querySelectorAll(".erro-campo").forEach((el) => el.remove());
+}
 
 // Validação Produto
 function validarProduto() {
@@ -120,7 +135,7 @@ function validarQuant() {
       return definirErro(campoQuant, "Inclua um número. Ex.: 10kg ou 500g.");
     }
 
-    const temUnidade = /\b(kg|g|gr|gramas?|quilos?|l|lt|ml|un|unid|unidades?|cx|pct|fd)\b/i.test(valor);
+    const temUnidade = /\d+\s*(kg|g|gr|gramas?|quilos?|l|lt|ml|un|unid|unidades?|unidade?|cx|pct|fd)(?![a-zà-ù])/i.test(valor);
     if (!temUnidade) {
       return definirErro(campoQuant, "Especifique a unidade (ex.: kg, g, unid, L).");
     }
@@ -462,7 +477,7 @@ function validarEntrega() {
 
   if (campoEntrega) {
     campoEntrega.addEventListener("input", () => {
-      if (campoEentrega.value.trim()) definirErro(campoEentrega, "");
+      if (campoEntrega.value.trim()) definirErro(campoEntrega, "");
     });
     campoEntrega.addEventListener("blur", validarEntrega);
   }
@@ -522,8 +537,6 @@ function validarEntrega() {
         primeiroInvalido[1]?.focus();
         return;
       }
-
-      const campoDescricao = document.getElementById("descricao");
       const campoComplemento = document.getElementById("complemento");
 
       const novaDoacao = {
@@ -553,13 +566,12 @@ function validarEntrega() {
         salvarDoacao(novaDoacao);
 
         form.reset();
+        limparEstadosCampos();
         limparPreviewImagem();
+        atualizarContadorDescricao();
         cepValidoApi = false;
         ultimoCepConsultado = "";
         mostrarAvisoSucesso("Doação cadastrada com sucesso! Ela já está disponível para as ONGs.");
-
-        // Opção B: se quiser redirecionar para a página de gestão do doador, descomente a linha abaixo:
-        // window.location.href = URL_GERENCIAR_DOACOES;
       } catch (erro) {
         definirErro(
           campoImagem,
@@ -568,5 +580,28 @@ function validarEntrega() {
       }
     });
   }
+
+  function atualizarContadorDescricao() {
+    if (!campoDescricao || !contadorDescricao) return;
+    const max = campoDescricao.maxLength || 500;
+    contadorDescricao.textContent = `${campoDescricao.value.length}/${max}`;
+  }
+
+  if (campoDescricao && contadorDescricao) {
+    atualizarContadorDescricao();
+    campoDescricao.addEventListener("input", atualizarContadorDescricao);
+  }
+
+  if (form) {
+  form.addEventListener("reset", () => {
+    setTimeout(() => {
+      atualizarContadorDescricao();
+      limparEstadosCampos();
+      limparPreviewImagem();
+      cepValidoApi = false;
+      ultimoCepConsultado = "";
+    }, 0);
+  });
+}
 
 });
