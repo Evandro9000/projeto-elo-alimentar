@@ -97,6 +97,14 @@
     text-align: center;
 }
 
+.cabecalho img, .foto img{
+    width: 14rem;
+    height: 10rem;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
 .cabecalho p {
     font-size: 0.5rem;
 }
@@ -216,8 +224,8 @@
     }
 
     .foto img{
-        width: 246px;
-        height: 176;
+        width: 18rem;
+        height: 12rem;
     }
 
     .card-botao button{

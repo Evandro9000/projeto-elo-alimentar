@@ -75,6 +75,41 @@ select:focus-visible, textarea:focus-visible {
     text-transform: uppercase;
 }
 
+.campo input:hover,
+.campo select:hover,
+.campo textarea:hover,
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    background-color: #f2f3f5;
+    border-width: 2px;
+}
+
+.erro-campo{
+    display: block;
+    color: #ef4444;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.campo .invalido{
+    border-color: #ef4444;
+    outline-color: #ef4444;
+    border-width: 2px;
+}
+
+.campo .valido,
+.campo .valido:hover,
+.campo .valido:focus {
+    border-color: var(--cd-slogan);
+    border-width: 2px;
+}
+
+.aviso-sucesso{
+    color: var(--cd-slogan);
+}
+
 @media (max-width: 959.98px) 
 {
     .sidebar:not(.is-open) .menu,
@@ -198,13 +233,11 @@ main {
 
 .btn {
     font: inherit;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: var(--cd-texto);
-    background: var(--cd-botao);
+    font-size: 1rem;
+    color:#ffff;
+    background: var(--cor-texto-escuro);
     border: 0;
-    border-radius: 0;
+    border-radius: 5px;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
 }
@@ -265,12 +298,15 @@ main {
         column-gap: 2rem;
         row-gap: 1.75rem;
         grid-template-areas:
-            "produto    produto    categoria   categoria"
-            "quantidade quantidade validade    validade"
-            "descricao  descricao  cep         cep"
-            "descricao  descricao  complemento complemento"
-            "acoes      acoes      numero      bairro"
-            "acoes      acoes      cidade      estado";
+            "produto    produto    entrega     entrega"
+            "quantidade  quantidade    cep complemento"
+            "categoria categoria        bairro         rua "
+            "validade validade       numero      cidade"
+            "descricao  descricao   estado      estado"
+            "estabelecimento estabelecimento  imagem   imagem"
+            "acoes      acoes       imagem     imagem"
+            "acoes      acoes       imagem  imagem"
+            "acoes      acoes       imagem  imagem";
     }
 
     .campo--produto     { grid-area: produto; }
@@ -284,8 +320,12 @@ main {
     .campo--bairro      { grid-area: bairro; }
     .campo--cidade      { grid-area: cidade; }
     .campo--estado      { grid-area: estado; }
+    .campo--rua         { grid-area: rua; }
+    .nome-local         { grid-area: estabelecimento;}
+    .campo--entrega     { grid-area: entrega;}
+    .campo--imagem      { grid-area: imagem }
 
-    .campo--produto input, .campo--quantidade input { max-width: 15rem; }
+    .campo--produto input, .campo--quantidade input, .campo--rua input, .nome-local input, .campo--entrega input, .campo--imagem input { max-width: 15rem; }
     .campo--categoria select { max-width: 19rem; }
     .campo--validade input { max-width: 11rem; }
     .campo--cep input { max-width: 8rem; }
