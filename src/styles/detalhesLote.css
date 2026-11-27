@@ -64,7 +64,7 @@
     align-items: center;
     background-color: var(--gradiente-inicio);
     width: 20.375rem;
-    height: 37.063rem;
+    min-height: 37.063rem;
     margin: 2.375rem;
     padding: 20px;
 }
@@ -173,6 +173,9 @@ p {
         flex-shrink: 0;
         margin-bottom: 0;
         align-self: flex-start;
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
 
     /* A área principal ocupa o espaço restante e centraliza o card perfeitamente */
@@ -181,18 +184,18 @@ p {
         height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         padding: 2rem;
+        overflow-y: auto;
         }
 
     .card-lote {
         width: auto;
         max-width: 35.125rem;
-        height: auto;
-        max-height: 90vh; 
+        min-height: auto;
         font-size: 1.2rem;
-        margin: auto;
+        margin: auto 0;
     }
 
     /* Informações do lote */
