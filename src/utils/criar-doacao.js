@@ -468,7 +468,7 @@ function validarEntrega() {
   }
 
 // Valida ao alterar e ao enviar o formulário
- const CHAVE_DOACOES = "eloAlimentar_doacoes";
+ const CHAVE_DOACOES = "elo_doacoes";
   const URL_GERENCIAR_DOACOES = "gerenciar-doacoes.html"; // opcional, se quiser ir para a gestão do doador
 
   function salvarDoacao(novaDoacao) {
