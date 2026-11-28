@@ -1,4 +1,3 @@
-
 // Imagem cinza usada quando a doação não tem foto
 const FOTO_PADRAO =
   "data:image/svg+xml;utf8," +
@@ -7,12 +6,24 @@ const FOTO_PADRAO =
   );
 
 function dataCompleta(valor = "") {
-  const m = valor.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const m = String(valor).match(/^(\d{4})-(\d{2})-(\d{2})$/);
   return m ? `${m[3]}/${m[2]}/${m[1]}` : valor;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function formatarCategoriaDashboard(slug = "") {
+  const mapa = {
+    hortifruti: "In natura: Hortifruti",
+    laticinios: "Laticínios",
+    padaria: "Padaria",
+    acougue: "Açougue",
+    enlatados: "Enlatados e conservas",
+    bebidas: "Bebidas",
+    outros: "Outros",
+  };
+  return mapa[slug] || slug || "Doação";
+}
 
+document.addEventListener("DOMContentLoaded", () => {
   // 1. Recupera e verifica o token
   const token = localStorage.getItem("token");
 
@@ -33,26 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 3. Decodifica o Payload
-    const payloadBase64 = partes[1]
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
+    const payloadBase64 = partes[1].replace(/-/g, "+").replace(/_/g, "/");
     const base64Completo = payloadBase64.padEnd(
       Math.ceil(payloadBase64.length / 4) * 4,
       "="
     );
 
-    const bytes = Uint8Array.from(
-      atob(base64Completo),
-      c => c.charCodeAt(0)
-    );
-
+    const bytes = Uint8Array.from(atob(base64Completo), (c) => c.charCodeAt(0));
     const payloadJson = new TextDecoder().decode(bytes);
     usuario = JSON.parse(payloadJson);
-
-    console.log("Usuário autenticado:", usuario.name);
-    console.log("Perfil:", usuario.role);
-
   } catch (error) {
     console.error("Token inválido:", error);
     localStorage.removeItem("token");
@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 5. Exibe o nome do usuário, caso exista o elemento
   const elementoNome = document.getElementById("nome-usuario");
-
   if (elementoNome) {
     elementoNome.textContent = usuario.name;
   }
@@ -93,39 +92,32 @@ document.addEventListener("DOMContentLoaded", () => {
         (soma, d) => soma + Elo.quantidadeEmKg(d.quantidade),
         0
       );
-
       totalEl.textContent = `${kg.toLocaleString("pt-BR")}KG`;
     }
 
     if (ongsEl) {
-      const ongs = new Set(
-        lista.filter(d => d.ong).map(d => d.ong)
-      );
-
+      const ongs = new Set(lista.filter((d) => d.ong).map((d) => d.ong));
       ongsEl.textContent = ongs.size;
     }
 
     if (coletaEl) {
-      coletaEl.textContent = lista.filter(
-        d => d.status === "coleta"
-      ).length;
+      coletaEl.textContent = lista.filter((d) => d.status === "coleta").length;
     }
 
     if (listaEl) {
-      // Remove os itens antigos, preservando o link "Ver todas"
-      listaEl.querySelectorAll(
-        ".collection-item, .vazio"
-      ).forEach(el => el.remove());
+      listaEl
+        .querySelectorAll(".collection-item, .vazio")
+        .forEach((el) => el.remove());
 
       const ultimas = lista.slice(0, 4);
 
       const html = ultimas.length
         ? ultimas
-            .map(d => {
+            .map((d) => {
               const foto =
-                d.imagens && d.imagens[0]
-                  ? d.imagens[0]
-                  : FOTO_PADRAO;
+                d.imagem ||
+                (Array.isArray(d.imagens) && d.imagens[0]) ||
+                FOTO_PADRAO;
 
               return `
                 <article class="collection-item">
@@ -136,8 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
                   <div class="collection-info">
                     <h3>${Elo.escapeHtml(d.produto)}</h3>
                     <p>
-                      ${Elo.escapeHtml(d.categoria)}
-                      - val.: ${dataCompleta(d.validade)}
+                      ${Elo.escapeHtml(formatarCategoriaDashboard(d.categoria))}
+                      - val.: ${Elo.escapeHtml(dataCompleta(d.validade))}
                     </p>
                   </div>
                 </article>`;
@@ -146,7 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
         : `<p class="vazio">Nenhuma coleta ainda.</p>`;
 
       const link = listaEl.querySelector(".view-all");
-
       if (link) {
         link.insertAdjacentHTML("beforebegin", html);
       } else {

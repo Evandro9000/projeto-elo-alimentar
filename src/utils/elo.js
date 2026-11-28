@@ -1,269 +1,165 @@
 /* =========================================================
    ELO ALIMENTAR
    Armazenamento e funções compartilhadas das doações
+   Padrão unificado com criar-doacao.js ("eloAlimentar_doacoes")
    ========================================================= */
 
 const Elo = (() => {
-
-  const CHAVE = "elo_doacoes";
+  const CHAVE = "eloAlimentar_doacoes";
 
   /* ---------------- STATUS ---------------- */
-
   const STATUS = {
     disponivel: {
       texto: "Disponível",
-      classe: "status--disponivel"
+      classe: "status--disponivel",
     },
-
     coleta: {
       texto: "Em coleta",
-      classe: "status--coleta"
+      classe: "status--em-coleta",
     },
-
     pendente: {
       texto: "Pendente",
-      classe: "status--pendente"
-    }
+      classe: "status--pendente",
+    },
   };
 
-
   /* ---------------- LER DOAÇÕES ---------------- */
-
   function ler() {
     try {
-      const dados = JSON.parse(
-        localStorage.getItem(CHAVE) || "[]"
-      );
-
+      const dados = JSON.parse(localStorage.getItem(CHAVE) || "[]");
       return Array.isArray(dados) ? dados : [];
-
     } catch (erro) {
-
       console.error("Erro ao ler as doações:", erro);
-
       return [];
     }
   }
 
-
   /* ---------------- NORMALIZAR ---------------- */
-
   function normalizar(doacao) {
-
     const imagens = Array.isArray(doacao.imagens)
       ? doacao.imagens
-      : (doacao.imagem ? [doacao.imagem] : []);
+      : doacao.imagem
+      ? [doacao.imagem]
+      : [];
 
     return {
       ...doacao,
-
-      imagens: imagens,
-
-      // Mantém compatibilidade com códigos antigos
-      imagem: imagens[0] || "",
-
-      // Toda nova doação começa disponível
+      id: String(doacao.id),
+      imagens,
+      imagem: imagens[0] || doacao.imagem || "",
       status: doacao.status || "disponivel",
-
-      // ONG ainda não definida
-      ong: doacao.ong || null
+      ong: doacao.ong || null,
     };
   }
 
-
   /* ---------------- LISTAR ---------------- */
-
   function listar() {
-
-    const lista = ler().map(normalizar);
+    const lista = ler()
+      .map(normalizar)
+      .sort((a, b) => String(b.criadoEm || "").localeCompare(String(a.criadoEm || "")));
 
     return Promise.resolve(lista);
   }
 
-
   /* ---------------- SALVAR ---------------- */
-
   function salvar(doacao) {
-
     const lista = ler().map(normalizar);
-
     const novaDoacao = normalizar(doacao);
-
-    const indice = lista.findIndex(
-      item => item.id === novaDoacao.id
-    );
+    const indice = lista.findIndex((item) => String(item.id) === String(novaDoacao.id));
 
     if (indice >= 0) {
-
-      // Atualiza uma doação existente
       lista[indice] = novaDoacao;
-
     } else {
-
-      // Cria uma nova doação
       lista.push(novaDoacao);
     }
 
-    localStorage.setItem(
-      CHAVE,
-      JSON.stringify(lista)
-    );
+    localStorage.setItem(CHAVE, JSON.stringify(lista));
 
-    // Atualiza a página caso outro código esteja observando
     window.dispatchEvent(
       new StorageEvent("storage", {
         key: CHAVE,
-        newValue: JSON.stringify(lista)
+        newValue: JSON.stringify(lista),
       })
     );
 
     return Promise.resolve(novaDoacao);
   }
 
-
   /* ---------------- REMOVER ---------------- */
-
   function remover(id) {
+    const lista = ler().filter((doacao) => String(doacao.id) !== String(id));
 
-    const lista = ler().filter(
-      doacao => doacao.id !== id
-    );
-
-    localStorage.setItem(
-      CHAVE,
-      JSON.stringify(lista)
-    );
+    localStorage.setItem(CHAVE, JSON.stringify(lista));
 
     window.dispatchEvent(
       new StorageEvent("storage", {
         key: CHAVE,
-        newValue: JSON.stringify(lista)
+        newValue: JSON.stringify(lista),
       })
     );
 
     return Promise.resolve();
   }
 
-
   /* ---------------- OBSERVAR ALTERAÇÕES ---------------- */
-
   function aoMudar(callback) {
-
-    window.addEventListener("storage", evento => {
-
+    window.addEventListener("storage", (evento) => {
       if (evento.key === CHAVE) {
         callback();
       }
-
     });
   }
 
-
   /* ---------------- ESCAPAR HTML ---------------- */
-
   function escapeHtml(valor = "") {
-
     return String(valor).replace(
       /[&<>"']/g,
-      caractere => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[caractere])
+      (caractere) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;",
+        }[caractere])
     );
   }
 
-
   /* ---------------- FORMATAR DATA ---------------- */
-
   function formatarValidade(valor = "") {
-
-    const partes = String(valor).match(
-      /^(\d{4})-(\d{2})-(\d{2})$/
-    );
-
-    if (!partes) {
-      return valor;
-    }
-
+    const partes = String(valor).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!partes) return valor;
     return `${partes[3]}/${partes[2]}/${partes[1]}`;
   }
 
-
   /* ---------------- CONVERTER QUANTIDADE PARA KG ---------------- */
-
   function quantidadeEmKg(valor = "") {
+    const texto = String(valor).toLowerCase().replace(",", ".");
+    const m = texto.match(/(\d+(?:\.\d+)?)\s*(t|ton|toneladas?|kg|quilos?|g|gr|gramas?|ml|l|lt|litros?)\b/);
 
-    const texto = String(valor)
-      .toLowerCase()
-      .replace(",", ".");
-
-    const numero = parseFloat(texto);
-
-    if (!Number.isFinite(numero)) {
-      return 0;
+    if (!m) {
+      const numeroSolto = parseFloat(texto);
+      return Number.isFinite(numeroSolto) ? numeroSolto : 0;
     }
 
-    // Toneladas
-    if (
-      /\b(t|ton|tonelada|toneladas)\b/.test(texto)
-    ) {
-      return numero * 1000;
-    }
+    const numero = parseFloat(m[1]);
+    const unidade = m[2];
 
-    // Gramas
-    if (
-      /\b(g|gr|grama|gramas)\b/.test(texto)
-    ) {
-      return numero / 1000;
-    }
-
-    // Mililitros
-    if (
-      /\b(ml)\b/.test(texto)
-    ) {
-      return numero / 1000000;
-    }
-
-    // Litros
-    if (
-      /\b(l|lt|litro|litros)\b/.test(texto)
-    ) {
-      return numero;
-    }
-
-    // Se não houver unidade,
-    // considera o número como kg
-    return numero;
+    if (/^(t|ton|toneladas?)$/.test(unidade)) return numero * 1000;
+    if (/^(g|gr|gramas?)$/.test(unidade)) return numero / 1000;
+    if (unidade === "ml") return numero / 1000000;
+    return numero; // kg, quilos, l, lt, litros
   }
 
-
-  /* =========================================================
-     FUNÇÕES DISPONÍVEIS PARA OS OUTROS ARQUIVOS
-     ========================================================= */
-
   return {
-
     CHAVE,
-
     STATUS,
-
     listar,
-
     salvar,
-
     remover,
-
     aoMudar,
-
     escapeHtml,
-
     formatarValidade,
-
-    quantidadeEmKg
-
+    quantidadeEmKg,
   };
-
 })();

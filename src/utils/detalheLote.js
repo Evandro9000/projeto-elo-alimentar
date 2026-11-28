@@ -17,11 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
       endereco.cep ? `CEP: ${endereco.cep}` : "",
     ].filter(Boolean);
 
-    const enderecoResumo =
-      item.local ||
-      [endereco.bairro, endereco.cidade, endereco.estado].filter(Boolean).join(" - ") ||
-      "Local não informado";
-
     const codigoGerado =
       item.codigo || `LOT-${String(item.id || "").slice(0, 6).toUpperCase()}`;
 
@@ -36,9 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
           ? partesEndereco.join(" | ")
           : "Endereço não informado",
       validade: item.validadeFormatada || item.validade || null,
-      entrega: item.entrega || "Retirada",
+      envio: item.envio || item.entrega || "Retirada",
       descricao: item.descricao || "",
-      imagem: item.imagem || "",
+      imagem: item.imagem || (Array.isArray(item.imagens) ? item.imagens[0] : "") || "",
       codigo: codigoGerado,
     };
   }
@@ -73,7 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Adiciona a imagem (se houver)
   const addImg = document.querySelector(".foto img");
   if (addImg) {
     if (loteSelecionado.imagem) {
@@ -86,13 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Adiciona o local
   const addLocal = document.querySelector(".local-lote");
   if (addLocal) {
     addLocal.innerHTML = `<b>Local</b>: ${escapeHTML(loteSelecionado.local)}`;
   }
 
-  // Adiciona todas as informações no card
   const addInfo = document.querySelector(".informacoes");
   if (addInfo) {
     const linhaCategoria = loteSelecionado.categoria
@@ -117,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  // Botão adicionar lote, oculta se já estiver no carrinho
   const btnAdd = document.querySelector(".add");
   const boxBotao = document.querySelector(".card-botao");
 
@@ -140,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnAdd) {
     btnAdd.addEventListener("click", () => {
-      let meulote = JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || "[]");
+      const meulote = JSON.parse(localStorage.getItem(CHAVE_CARRINHO) || "[]");
       if (meulote.some((item) => String(item.id) === String(idLote))) {
         atualizarBotaoVisivel();
         return;
@@ -160,14 +151,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Caso o usuário remova o lote em outra aba e volte para esta
   window.addEventListener("storage", (event) => {
     if (event.key === CHAVE_CARRINHO || event.key === CHAVE_DOACOES) {
       atualizarBotaoVisivel();
     }
   });
 
-  // Botão de Logout
   const btnLogout = document.querySelector(".logout");
   if (btnLogout) {
     btnLogout.addEventListener("click", (event) => {

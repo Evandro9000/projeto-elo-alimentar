@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
   const tbody = document.getElementById("tabela-doacoes");
   if (!tbody) return;
@@ -9,9 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const semResultados = document.getElementById("sem-resultados");
   let doacoes = [];
 
-  // Linha vazia que o seu CSS estica para preencher o resto da tabela
   const LINHA_PREENCHIMENTO =
     '<tr class="preenchimento" aria-hidden="true"><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+
+  function formatarCategoria(slug = "") {
+    const mapa = {
+      hortifruti: "In natura: Hortifruti",
+      laticinios: "Laticínios",
+      padaria: "Padaria",
+      acougue: "Açougue",
+      enlatados: "Enlatados e conservas",
+      bebidas: "Bebidas",
+      outros: "Outros",
+    };
+    return mapa[slug] || slug || "Doação";
+  }
 
   async function carregar() {
     doacoes = await Elo.listar();
@@ -23,25 +34,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const status = filtro ? filtro.value : "";
 
     const lista = doacoes.filter((d) => {
+      const categoriaTexto = formatarCategoria(d.categoria).toLowerCase();
       const bateBusca =
-        !termo || d.produto.toLowerCase().includes(termo) || d.categoria.toLowerCase().includes(termo);
-      return bateBusca && (!status || d.status === status);
+        !termo ||
+        String(d.produto || "").toLowerCase().includes(termo) ||
+        String(d.categoria || "").toLowerCase().includes(termo) ||
+        categoriaTexto.includes(termo);
+
+      const statusAtual = d.status || "disponivel";
+      return bateBusca && (!status || statusAtual === status);
     });
 
     if (semResultados) semResultados.hidden = lista.length > 0;
 
     const linhas = lista
       .map((d) => {
-        const st = Elo.STATUS[d.status] || Elo.STATUS.disponivel;
+        const statusAtual = d.status || "disponivel";
+        const st = Elo.STATUS[statusAtual] || Elo.STATUS.disponivel;
         const produto = Elo.escapeHtml(d.produto);
+        const categoriaFormatada = Elo.escapeHtml(formatarCategoria(d.categoria));
+
         const opcoes = Object.entries(Elo.STATUS)
           .map(
             ([chave, info]) =>
-              `<option value="${chave}" ${chave === d.status ? "selected" : ""}>${info.texto}</option>`
+              `<option value="${chave}" ${chave === statusAtual ? "selected" : ""}>${info.texto}</option>`
           )
           .join("");
 
-        const fotos = d.imagens || [];
+        const fotos = Array.isArray(d.imagens) && d.imagens.length
+          ? d.imagens
+          : d.imagem
+          ? [d.imagem]
+          : [];
+
         const miniatura = fotos.length
           ? `<button type="button" class="ver-imagens" title="Ver imagens" aria-label="Ver imagens de ${produto}">
                <img class="miniatura" src="${Elo.escapeHtml(fotos[0])}" alt="">
@@ -50,10 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
           : "";
 
         return `
-          <tr data-id="${d.id}">
+          <tr data-id="${Elo.escapeHtml(d.id)}">
             <th scope="row">${miniatura}${produto}</th>
             <td>${Elo.escapeHtml(d.quantidade)}</td>
-            <td>${Elo.escapeHtml(d.categoria)}</td>
+            <td>${categoriaFormatada}</td>
             <td>${Elo.escapeHtml(Elo.formatarValidade(d.validade))}</td>
             <td>${Elo.escapeHtml(d.ong || "—")}</td>
             <td>
@@ -81,12 +106,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === dlg || e.target.classList.contains("fechar-galeria")) dlg.close();
       });
     }
+
+    const fotos = Array.isArray(doacao.imagens) && doacao.imagens.length
+      ? doacao.imagens
+      : doacao.imagem
+      ? [doacao.imagem]
+      : [];
+
     dlg.innerHTML = `
       <button type="button" class="fechar-galeria" aria-label="Fechar">×</button>
       <h3>${Elo.escapeHtml(doacao.produto)}</h3>
       <div class="galeria-grid">
-        ${(doacao.imagens || [])
-          .map((src, i) => `<img src="${Elo.escapeHtml(src)}" alt="Foto ${i + 1} de ${Elo.escapeHtml(doacao.produto)}">`)
+        ${fotos
+          .map(
+            (src, i) =>
+              `<img src="${Elo.escapeHtml(src)}" alt="Foto ${i + 1} de ${Elo.escapeHtml(doacao.produto)}">`
+          )
           .join("")}
       </div>`;
     dlg.showModal();
@@ -96,11 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
   tbody.addEventListener("change", async (e) => {
     if (!e.target.classList.contains("trocar-status")) return;
     const id = e.target.closest("tr").dataset.id;
-    const doacao = doacoes.find((d) => d.id === id);
+    const doacao = doacoes.find((d) => String(d.id) === String(id));
     if (!doacao) return;
 
     doacao.status = e.target.value;
-    // Fora de "Disponível" precisa de uma ONG responsável
     if (doacao.status !== "disponivel" && !doacao.ong) {
       doacao.ong = prompt("Nome da ONG responsável:") || "ONG não informada";
     }
@@ -113,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   tbody.addEventListener("click", async (e) => {
     const linha = e.target.closest("tr");
     if (!linha || !linha.dataset.id) return;
-    const doacao = doacoes.find((d) => d.id === linha.dataset.id);
+    const doacao = doacoes.find((d) => String(d.id) === String(linha.dataset.id));
     if (!doacao) return;
 
     if (e.target.closest(".ver-imagens")) {
@@ -124,12 +158,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target.closest(".btn-remover")) {
       if (!confirm("Remover esta doação?")) return;
       await Elo.remover(doacao.id);
-      doacoes = doacoes.filter((d) => d.id !== doacao.id);
+      doacoes = doacoes.filter((d) => String(d.id) !== String(doacao.id));
       desenhar();
     }
   });
 
-  // O campo de busca está dentro de um <form>: sem isto, o Enter recarregaria a página
   if (formBusca) {
     formBusca.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -139,8 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (busca) busca.addEventListener("input", desenhar);
   if (filtro) filtro.addEventListener("change", desenhar);
 
-  // Atualiza quando algo muda em outra aba
   Elo.aoMudar(carregar);
-
   carregar();
 });
